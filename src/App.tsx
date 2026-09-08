@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { supabase } from './lib/supabase'
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from './lib/firebase'
 
 type Status = 'checking' | 'connected' | 'failed'
 
@@ -8,15 +9,10 @@ export default function App() {
   const [detail, setDetail] = useState('')
 
   useEffect(() => {
-    supabase.auth.getSession()
-      .then(({ error }) => {
-        if (error) {
-          setStatus('failed')
-          setDetail(error.message)
-        } else {
-          setStatus('connected')
-          setDetail(import.meta.env.VITE_SUPABASE_URL)
-        }
+    getDoc(doc(db, 'businesses', 'connection-test'))
+      .then((snap) => {
+        setStatus('connected')
+        setDetail(snap.exists() ? 'Test document found' : 'Reached Firestore, no test document')
       })
       .catch((e: Error) => {
         setStatus('failed')
@@ -26,9 +22,10 @@ export default function App() {
 
   return (
     <main style={{ fontFamily: 'system-ui', padding: 32 }}>
-      <h1>Supabase connection</h1>
+      <h1>Firebase connection</h1>
       <p>Status: {status}</p>
       {detail && <p style={{ color: '#666' }}>{detail}</p>}
+      <p style={{ color: '#666' }}>{import.meta.env.VITE_FIREBASE_PROJECT_ID}</p>
     </main>
   )
 }
