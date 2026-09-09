@@ -1,31 +1,21 @@
-import { useEffect, useState } from 'react'
-import { doc, getDoc } from 'firebase/firestore'
-import { db } from './lib/firebase'
-
-type Status = 'checking' | 'connected' | 'failed'
+import { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from './store'
+import { loadSite } from './features/siteSlice'
 
 export default function App() {
-  const [status, setStatus] = useState<Status>('checking')
-  const [detail, setDetail] = useState('')
+  const dispatch = useAppDispatch()
+  const { status, data, error } = useAppSelector((s) => s.site)
 
   useEffect(() => {
-    getDoc(doc(db, 'businesses', 'connection-test'))
-      .then((snap) => {
-        setStatus('connected')
-        setDetail(snap.exists() ? 'Test document found' : 'Reached Firestore, no test document')
-      })
-      .catch((e: Error) => {
-        setStatus('failed')
-        setDetail(e.message)
-      })
-  }, [])
+    dispatch(loadSite('demo-fabrication'))
+  }, [dispatch])
 
   return (
     <main style={{ fontFamily: 'system-ui', padding: 32 }}>
-      <h1>Firebase connection</h1>
+      <h1>Store test</h1>
       <p>Status: {status}</p>
-      {detail && <p style={{ color: '#666' }}>{detail}</p>}
-      <p style={{ color: '#666' }}>{import.meta.env.VITE_FIREBASE_PROJECT_ID}</p>
+      {error && <p style={{ color: '#a3312a' }}>{error}</p>}
+      {data && <pre style={{ background: '#f5f5f4', padding: 16 }}>{JSON.stringify(data, null, 2)}</pre>}
     </main>
   )
 }
