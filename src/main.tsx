@@ -1,23 +1,20 @@
-// import { StrictMode } from 'react'
-// import { createRoot } from 'react-dom/client'
-// import { Provider } from 'react-redux'
-// import { store } from "./store"
-// import App from './App'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import App from './App';
+import { store } from './store';
+import { restoreSession } from './store/slices/authSlice';
+import { loadSite } from './store/slices/siteSlice';
 
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <Provider store={store}>
-//       <App />
-//     </Provider>
-//   </StrictMode>
-// )
+const BUSINESS_ID = import.meta.env.VITE_BUSINESS_ID || 'demo';
 
-import { StrictMode } from "react"
-import { createRoot } from "react-dom/client"
-import App from "./App"
+store.dispatch(restoreSession());
+store.dispatch(loadSite(BUSINESS_ID));
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-)
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);

@@ -1,10 +1,19 @@
+
 export type Service = {
+  position: 1 | 2 | 3;
   name: string
   description: string
   imagePath: string
 }
 
 export type GallerySlot = {
+  hero1: string,
+  hero2: string,
+  galleryPremises: string,
+  galleryWork1: string,
+  galleryWork2: string,
+  galleryDelivery1: string,
+  galleryDelivery2: string
   label: string
   imagePath: string
 }
@@ -36,6 +45,7 @@ export type Business = {
 }
 
 export type Profile = {
+  id: string;
   businessId: string
   displayName: string
   role: 'owner' | 'support'
@@ -49,3 +59,10 @@ export type Area =
   | 'gallery'
   | 'contact'
   | 'compliance'
+
+export interface GalleryRow {
+  slot: GallerySlot;
+  label: string
+  imagePath: string;
+  role: 'owner' | 'support'
+}

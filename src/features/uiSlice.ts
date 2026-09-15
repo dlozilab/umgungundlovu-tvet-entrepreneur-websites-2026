@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 type UiState = {
+  activePage: string
   navOpen: boolean
   toast: string | null
 }
