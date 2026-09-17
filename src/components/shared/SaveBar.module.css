@@ -1,0 +1,9 @@
+.bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-soft);
+    flex-wrap: wrap;
+}

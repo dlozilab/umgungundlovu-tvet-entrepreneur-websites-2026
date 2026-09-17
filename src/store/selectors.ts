@@ -43,6 +43,19 @@ export const selectGallery = createSelector([selectMediaRaw], (media) =>
   media.filter((m) => String(m.slot).startsWith('gallery') && m.imagePath)
 );
 
+//adding the hero portrait..
+
+export const selectHeroImages = createSelector([selectMediaRaw], (media)=> {
+  const bySlot = new Map(media.map((m)=> [m.slot, m]));
+  return (['hero1', 'hero2'] as const)
+  .map((slot) => bySlot.get(slot))
+  .filter((row): row is NonNullable<typeof row> => Boolean(row?.imagePath))
+});
+
+//about section for owner potrait
+export const selectPortrait = createSelector([selectMediaRaw], (media) =>
+media.find((m) => m.slot ==='portrait'&& m.imagePath) )
+
 export const selectMeta = createSelector(
   [selectBusinessRaw, selectStrapline],
   (business, strapline) => {

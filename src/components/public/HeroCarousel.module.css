@@ -1,0 +1,50 @@
+.slides {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: var(--brand-wash);
+}
+
+.slides img{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+.on { opacity: 1;}
+
+.empty {
+    aspect-ratio: 4/3;
+    background: var(--brand-wash);
+}
+
+.dots {
+    position:absolute;
+    bottom: 12px;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+}
+
+.dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    padding: 0;
+    border: 1px solid #fff;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dots button[aria-current="true"] {background: #fff;}
+
+@media (min-width: 768px) {
+    .slides {aspect-ratio: 16/11;}
+}
