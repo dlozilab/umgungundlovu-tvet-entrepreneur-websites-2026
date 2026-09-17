@@ -1,0 +1,14 @@
+.checkline {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.checkline input {
+    width: 20px;
+    height: 20px;
+}

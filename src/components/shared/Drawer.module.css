@@ -1,0 +1,43 @@
+/* Drawer.module.css */
+.scrim {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.2s;
+  z-index: 50;
+}
+.scrim[data-open="true"] { opacity: 1; visibility: visible; }
+
+.drawer {
+  position: fixed; top: 0; right: 0; height: 100%;
+  width: 270px; max-width: 82vw;
+  background: var(--bg);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  transition: transform 0.22s ease;
+  z-index: 60;
+  display: flex; flex-direction: column;
+}
+.drawer[data-open="true"] { transform: translateX(0); }
+
+.head {
+  height: var(--header-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.title { font-weight: 600; font-size: 16px; }
+.closeBtn {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: transparent; cursor: pointer; color: var(--ink);
+}
+
+.body { padding: 8px 0; flex: 1; overflow-y: auto; }
+
+@media (min-width: 768px) {
+  /* On wide screens the admin sidebar renders NavList pinned open instead
+     of through Drawer — public nav still uses the drawer at all widths
+     since the public header stays compact by design (§4 PublicLayout). */
+}

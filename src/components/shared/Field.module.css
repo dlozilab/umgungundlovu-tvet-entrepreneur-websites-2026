@@ -1,0 +1,38 @@
+.field {
+    margin-bottom: 18px;
+    
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom:6px ;
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+}
+.field input, .field textarea, .field select {
+    width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--bg);
+    background: var(--bg);
+    border: 1px solid var(--radius);
+    padding: 12px 14px;
+    min-height: 48px;
+}
+
+.field textarea{
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.field input:focus, .field textarea:focus, .field select:focus {
+    outline: 2px solid var(--ink);
+    outline-offset: -1px;
+}

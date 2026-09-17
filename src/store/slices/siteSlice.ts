@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { doc, getDoc, setDoc, collection, getDocs, serverTimestamp} from 'firebase/firestore'
 import { db } from "../../lib/firebase";
 import type { Business, GalleryRow, Area, GallerySlot,Service } from "../../types/site";
@@ -49,7 +49,7 @@ export const loadSite = createAsyncThunk(
 );
 
 export const  saveArea = createAsyncThunk(
-    'ite/saveArea',
+    'site/saveArea',
     async(
         {businessId, area, patch}: {businessId: string; area: Area; patch: Partial<Business> | Service[]},
         {rejectWithValue}
@@ -86,7 +86,7 @@ export const setMedia = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const row: GalleryRow = { slot, role: 'support', imagePath: image_path, label: label ?? '' };
+      const row: GalleryRow = { slot, imagePath: image_path, label: label ?? '', alt: alt ?? '' };
       await setDoc(doc(db, 'businesses', businessId, 'media', String(slot)), row, { merge: true });
       return row;
     } catch (err: any) {
