@@ -1,4 +1,3 @@
-import React from "react"
 import styles from './Checkline.module.css'
 
 interface ChecklineProps {

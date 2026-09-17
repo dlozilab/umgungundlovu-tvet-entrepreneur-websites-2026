@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Field.module.css';
 
 type FieldType = 'text' | 'email' | 'password' | 'tel' | 'textarea' | 'select';

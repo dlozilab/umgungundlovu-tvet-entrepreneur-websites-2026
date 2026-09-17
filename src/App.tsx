@@ -1,11 +1,10 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import PublicLayout from './components/public/PublicLayout';
 import HeroCarousel from './components/public/HeroCarousel';
 import AboutSection from './components/public/AboutSection';
 import ServicesSection from './components/public/ServicesSection';
 import GallerySection from './components/public/GallerySection';
-import Toast from './components/shared/Toast';
+// import Toast from './components/shared/Toast';
 import SectionHeading from './components/shared/SectionHeading';
 import Button from './components/shared/Button';
 import { selectBusiness, selectSiteStatus, selectSiteError } from './store/slices/siteSlice';
@@ -40,7 +39,7 @@ export default function App() {
 
         {/* ContactSection, SiteFooter, WhatsAppFab aren't built yet */}
       </PublicLayout>
-      <Toast />
+      {/* <Toast /> */}
     </>
   );
 }

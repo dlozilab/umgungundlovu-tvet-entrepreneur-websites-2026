@@ -6,7 +6,7 @@ type UiState = {
   toast: string | null
 }
 
-const initialState: UiState = { navOpen: false, toast: null }
+const initialState: UiState = { activePage: '', navOpen: false, toast: null }
 
 const uiSlice = createSlice({
   name: 'ui',
