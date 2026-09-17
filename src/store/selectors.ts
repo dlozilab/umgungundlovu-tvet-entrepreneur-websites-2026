@@ -1,15 +1,13 @@
 import { createSelector } from '@reduxjs/toolkit';
 import type { RootState } from './index';
+import type { Service, GalleryRow } from '../types/site';
 import { buildStrapline } from '../utils/strapline';
 import { deriveTones, luminance } from '../utils/colour';
 import { buildGeoUri, buildWaLink } from '../utils/links';
 import { completeness } from '../utils/completeness';
 
-// Stable fallback references — reused, never recreated, so the input
-// selectors below satisfy reselect's referential-equality check even
-// when state.site.services/media is genuinely undefined.
-const EMPTY_SERVICES: RootState['site']['services'] = [];
-const EMPTY_MEDIA: RootState['site']['media'] = [] as any;
+const EMPTY_SERVICES: Service[] = [];
+const EMPTY_MEDIA: GalleryRow[] = [];
 
 const selectBusinessRaw = (state: RootState) => state.site?.business ?? null;
 const selectServicesRaw = (state: RootState) => state.site?.services ?? EMPTY_SERVICES;
@@ -43,18 +41,16 @@ export const selectGallery = createSelector([selectMediaRaw], (media) =>
   media.filter((m) => String(m.slot).startsWith('gallery') && m.imagePath)
 );
 
-//adding the hero portrait..
-
-export const selectHeroImages = createSelector([selectMediaRaw], (media)=> {
-  const bySlot = new Map(media.map((m)=> [m.slot, m]));
+export const selectHeroImages = createSelector([selectMediaRaw], (media) => {
+  const bySlot = new Map(media.map((m) => [m.slot, m]));
   return (['hero1', 'hero2'] as const)
-  .map((slot) => bySlot.get(slot))
-  .filter((row): row is NonNullable<typeof row> => Boolean(row?.imagePath))
+    .map((slot) => bySlot.get(slot))
+    .filter((row): row is NonNullable<typeof row> => Boolean(row?.imagePath));
 });
 
-//about section for owner potrait
 export const selectPortrait = createSelector([selectMediaRaw], (media) =>
-media.find((m) => m.slot ==='portrait'&& m.imagePath) )
+  media.find((m) => m.slot === 'portrait' && m.imagePath)
+);
 
 export const selectMeta = createSelector(
   [selectBusinessRaw, selectStrapline],

@@ -1,0 +1,28 @@
+.grid {
+    display: grid;
+    gap: 20px;
+}
+
+.portrait {
+    width: 100%;
+    border-radius: var(--radiud);
+    border: 1px solid var(--line-soft);
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.portraitPlaceholder {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: var(--radiud);
+    border: 1px dashed var(--line);
+    background: var(--bg-alt);
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: 280px 1fr;
+        gap: 36px;
+        align-items: start;
+    }
+}

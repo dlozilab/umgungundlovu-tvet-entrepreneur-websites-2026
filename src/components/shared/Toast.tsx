@@ -8,7 +8,7 @@ export default function Toast() {
   if (!toast) return null;
   return (
     <div className={styles.toast} role='status' aria-live="polite">
-      {toast}
+      {toast?.message}
     </div>
   )
 }

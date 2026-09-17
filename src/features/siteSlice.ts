@@ -53,16 +53,29 @@ const siteSlice = createSlice({
       action: PayloadAction<{ index: 0 | 1 | 2; key: 'name' | 'description' | 'imagePath'; value: string }>
     ) => {
       const { index, key, value } = action.payload
-      if (state.data) state.data.services[index][key] = value
+      if (state.data) {
+        const services = (state.data as unknown as {
+          services: Array<Record<'name' | 'description' | 'imagePath', string>>
+        }).services
+        services[index][key] = value
+      }
     },
     setGallery: (
       state,
       action: PayloadAction<{ index: number; imagePath: string }>
     ) => {
-      if (state.data) state.data.gallery[action.payload.index].imagePath = action.payload.imagePath
+      if (state.data) {
+        const gallery = (state.data as unknown as {
+          gallery: Array<{ imagePath: string }>
+        }).gallery
+        gallery[action.payload.index].imagePath = action.payload.imagePath
+      }
     },
     setHero: (state, action: PayloadAction<{ index: 0 | 1; imagePath: string }>) => {
-      if (state.data) state.data.hero[action.payload.index] = action.payload.imagePath
+      if (state.data) {
+        const hero = (state.data as unknown as { hero: string[] }).hero
+        hero[action.payload.index] = action.payload.imagePath
+      }
     },
   },
   extraReducers: (builder) => {
