@@ -17,7 +17,7 @@ export const demoBusiness: Business = {
   hours: 'Monday to Sunday, 08:00 to 17:00',
   delivers: true,
   walkins: true,
-  registeredName: 'Msizi Fabrication (Pty) Ltd',
+  registeredName: 'Try Again Co and Partners',
   cipcNumber: '2020/123456/07',
   established: '2020',
   bbeeLevel: '',
@@ -30,7 +30,6 @@ export const demoServices: Service[] = [
   { position: 3, name: 'Boiler making', description: 'Tanks, frames and heavy structural work.', imagePath: '' },
 ];
 
-// Empty on purpose — HeroCarousel and GallerySection both already handle
 // zero rows (empty placeholder / section returns null), so this also
 // doubles as a check that those empty states look right.
 export const demoMedia: GalleryRow[] = [];

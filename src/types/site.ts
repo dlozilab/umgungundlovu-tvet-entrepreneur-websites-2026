@@ -39,6 +39,7 @@ export type Business = {
   registeredName: string;
   cipcNumber: string;
   established: string;
+  proudlySA: boolean;
   bbeeLevel: string;
   published: boolean;
 };

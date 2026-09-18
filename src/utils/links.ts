@@ -17,3 +17,12 @@ export function buildWaLink(number: string): string {
     if (w.charAt(0) === '0') w = '27' + w.slice(1);
     return `https://wa.me/${w}`
 }
+export function buildTelLink(phone: string): string {
+    const digits = (phone || '').replace(/\D/g, '');
+    return digits ? `tel:${digits}` : '#'
+}
+
+export function buildMailLink(email: string): string {
+    const e = (email || '').trim();
+    return e ? `mailto:${e}`: '#'
+}
