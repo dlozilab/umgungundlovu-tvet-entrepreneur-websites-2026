@@ -1,0 +1,35 @@
+/* SiteFooter.module.css */
+.footer {
+  background: var(--brand-wash);
+  border-top: 1px solid var(--line);
+  padding: 32px 0 40px;
+}
+.cols { display: grid; gap: 32px; }
+
+.brand { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.logo { width: 34px; height: 34px; border-radius: var(--radius); object-fit: cover; }
+.logoPh { width: 34px; height: 34px; border-radius: var(--radius); background: var(--bg-alt); border: 1px dashed var(--line); }
+
+.address { display: inline-flex; gap: 10px; align-items: flex-start; padding: 12px 0; font-size: 15px; color: var(--ink); }
+.address svg { color: var(--brand-ink); }
+
+.compliance { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ink-soft); }
+.dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin-bottom: 12px; }
+.dl dd { color: var(--ink); }
+
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+
+.creditRow { margin-top: 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.credit { font-size: 12px; color: var(--ink-soft); margin: 0; }
+.adminLink {
+  display: flex; align-items: center; justify-content: center; flex: none;
+  width: 40px; height: 40px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  color: var(--ink-soft); background: var(--bg);
+}
+.adminLink:hover { color: var(--ink); border-color: var(--ink); }
+
+@media (min-width: 768px) {
+  .cols { grid-template-columns: 1.2fr 1fr; align-items: start; }
+  .compliance { border-top: none; margin-top: 0; padding-top: 0; }
+}

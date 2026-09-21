@@ -28,7 +28,6 @@ export type Business = {
   logoPath: string;
   sharePath: string;
   aboutStory: string;
-  aboutPortrait: string;
   phone: string;
   whatsapp: string;
   email: string;
@@ -39,8 +38,8 @@ export type Business = {
   registeredName: string;
   cipcNumber: string;
   established: string;
-  proudlySA: boolean;
   bbeeLevel: string;
+  proudlySa: boolean; 
   published: boolean;
 };
 

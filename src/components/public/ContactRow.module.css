@@ -1,0 +1,15 @@
+/* ContactRow.module.css */
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-soft);
+  list-style: none;
+}
+.row svg { margin-top: 2px; color: var(--brand-ink); }
+
+.link { display: flex; gap: 12px; align-items: flex-start; }
+
+.label { font-size: 12px; color: var(--ink-soft); display: block; }
+.value { font-size: 15px; color: var(--ink); }

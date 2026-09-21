@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import { signInWithEmailAndPassword, signOut as firebaseSignOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc} from 'firebase/firestore'
-import {auth, db} from '../../firebase/firebase'
+import {auth, db} from '../../lib/firebase'
 import type { Profile } from '../../types/site';
 import type { RootState } from '../';
 

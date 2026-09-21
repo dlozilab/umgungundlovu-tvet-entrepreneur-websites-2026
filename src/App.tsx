@@ -1,9 +1,13 @@
+import React from 'react';
 import { useSelector } from 'react-redux';
 import PublicLayout from './components/public/PublicLayout';
 import HeroCarousel from './components/public/HeroCarousel';
 import AboutSection from './components/public/AboutSection';
 import ServicesSection from './components/public/ServicesSection';
 import GallerySection from './components/public/GallerySection';
+import ContactSection from './components/public/ContactSection';
+import SiteFooter from './components/public/SiteFooter';
+import WhatsAppFab from './components/public/WhatsappFab';
 // import Toast from './components/shared/Toast';
 import SectionHeading from './components/shared/SectionHeading';
 import Button from './components/shared/Button';
@@ -36,9 +40,10 @@ export default function App() {
         <AboutSection />
         <ServicesSection />
         <GallerySection />
-
-        {/* ContactSection, SiteFooter, WhatsAppFab aren't built yet */}
+        <ContactSection />
       </PublicLayout>
+      <SiteFooter />
+      <WhatsAppFab />
       {/* <Toast /> */}
     </>
   );

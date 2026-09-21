@@ -1,12 +1,10 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from '@reduxjs/toolkit'
-import {
-  signInWithEmailAndPassword,
-  signOut as fbSignOut,
-  type User,
-} from 'firebase/auth'
+import { signInWithEmailAndPassword, signOut as fbSignOut, type User} from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
-import { auth, db } from '../lib/firebase'
 import type { Profile } from '../types/site'
+import { auth, db } from '../lib/firebase'
+
+
 
 type AuthState = {
   uid: string | null

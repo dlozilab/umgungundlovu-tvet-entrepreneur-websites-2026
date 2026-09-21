@@ -37,6 +37,13 @@ export const selectWaLink = createSelector([selectBusinessRaw], (business) =>
   buildWaLink(business?.whatsapp || '')
 );
 
+export const selectServes= createSelector([selectBusinessRaw], (business) => {
+    const parts: string[] = [];
+    if (business?.delivers) parts.push('We deliver');
+    if (business?.walkins) parts.push('we take walk-ins');
+    return parts.join(', ')
+})
+
 export const selectGallery = createSelector([selectMediaRaw], (media) =>
   media.filter((m) => String(m.slot).startsWith('gallery') && m.imagePath)
 );
