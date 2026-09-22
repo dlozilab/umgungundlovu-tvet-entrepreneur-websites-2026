@@ -1,0 +1,33 @@
+/* CmsLayout.module.css */
+.viewSite {
+  display: flex; align-items: center;
+  height: 36px; padding: 0 14px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  font-size: 13px; color: var(--ink);
+}
+
+.sidebar { display: none; }
+
+.signOut {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; text-align: left;
+  padding: 14px 20px; margin-top: 12px;
+  font-size: 16px; border: 0; border-top: 1px solid var(--line);
+  background: transparent; color: var(--danger);
+  font-family: inherit; cursor: pointer;
+}
+
+.main { padding: 20px 16px 60px; max-width: 760px; }
+
+@media (min-width: 768px) {
+  .body { display: flex; align-items: flex-start; }
+  .sidebar {
+    display: flex; flex-direction: column;
+    width: var(--side-w); flex: none;
+    border-right: 1px solid var(--line);
+    min-height: calc(100vh - var(--header-h));
+    position: sticky; top: var(--header-h);
+    padding-top: 12px;
+  }
+  .main { flex: 1; padding: 28px 32px 80px; }
+}

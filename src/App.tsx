@@ -1,4 +1,5 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PublicLayout from './components/public/PublicLayout';
 import HeroCarousel from './components/public/HeroCarousel';
@@ -8,13 +9,19 @@ import GallerySection from './components/public/GallerySection';
 import ContactSection from './components/public/ContactSection';
 import SiteFooter from './components/public/SiteFooter';
 import WhatsAppFab from './components/public/WhatsappFab';
+import MetaTags from './components/shared/MegaTags';
 // import Toast from './components/shared/Toast';
 import SectionHeading from './components/shared/SectionHeading';
 import Button from './components/shared/Button';
+import LoginPage from './pages/LoginPage';
+import CmsLayout from './components/cms/CmsLayout';
+import DashboardPage from './pages/admin/DashboardPage';
+import BusinessDetailsPage from './pages/admin/BusinessDetailsPage';
+import RequireAuth from './routes/RequireAuth';
 import { selectBusiness, selectSiteStatus, selectSiteError } from './store/slices/siteSlice';
 import { selectStrapline } from './store/selectors';
 
-export default function App() {
+function PublicSite() {
   const business = useSelector(selectBusiness);
   const siteStatus = useSelector(selectSiteStatus);
   const siteError = useSelector(selectSiteError);
@@ -27,6 +34,7 @@ export default function App() {
 
   return (
     <>
+      <MetaTags />
       <PublicLayout>
         <div className="hero">
           <HeroCarousel />
@@ -36,7 +44,6 @@ export default function App() {
             <Button variant="solid">Get a quote</Button>
           </div>
         </div>
-
         <AboutSection />
         <ServicesSection />
         <GallerySection />
@@ -44,6 +51,30 @@ export default function App() {
       </PublicLayout>
       <SiteFooter />
       <WhatsAppFab />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<PublicSite />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth>
+              <CmsLayout />
+            </RequireAuth>
+          }
+        >
+          <Route index element={<DashboardPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="details" element={<BusinessDetailsPage />} />
+          {/* branding, about, services, gallery, contact, compliance, help — next */}
+        </Route>
+      </Routes>
       {/* <Toast /> */}
     </>
   );
