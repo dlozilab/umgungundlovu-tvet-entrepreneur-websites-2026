@@ -5,10 +5,10 @@ import {signIn, selectAuthStatus, selectAuthError, selectAuthUser} from '../stor
 import Field from "../components/shared/Field";
 import Button from "../components/shared/Button";
 import { useEffect } from "react";
-import styles from './LoginPage.module.css'
+import styles from './AdminLoginPage.module.css'
 import { useState } from "react";
 
-export default function LoginPage() {
+export default function AdminLoginPage() {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const location = useLocation();

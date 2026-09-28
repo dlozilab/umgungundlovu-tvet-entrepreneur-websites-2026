@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PublicLayout from './components/public/PublicLayout';
@@ -13,7 +12,7 @@ import MetaTags from './components/shared/MegaTags';
 // import Toast from './components/shared/Toast';
 import SectionHeading from './components/shared/SectionHeading';
 import Button from './components/shared/Button';
-import LoginPage from './pages/LoginPage';
+import AdminLoginPage from './pages/AdminLoginPage';
 import CmsLayout from './components/cms/CmsLayout';
 import DashboardPage from './pages/admin/DashboardPage';
 import BusinessDetailsPage from './pages/admin/BusinessDetailsPage';
@@ -60,7 +59,7 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<PublicSite />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route
           path="/admin"
           element={
