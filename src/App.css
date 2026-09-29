@@ -7,3 +7,69 @@
 *, *::before, *::after {
   box-sizing: border-box;
 }
+
+.hero {
+  background: var(--brand-wash);
+}
+
+.hero-wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 26px 20px 34px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.hero-copy {
+  max-width: 520px;
+}
+
+.hero-kicker {
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.hero-lead {
+  margin-top: 16px;
+  font-size: 1.125rem;
+}
+
+.hero-cta {
+  margin-top: 12px;
+}
+
+@media (max-width: 767px) {
+  .hero-wrap {
+    padding: 18px 20px 26px;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .hero-copy {
+    max-width: none;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .hero-lead {
+    font-size: 1rem;
+  }
+}

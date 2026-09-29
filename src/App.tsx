@@ -1,4 +1,5 @@
 // import React from 'react';
+import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PublicLayout from './components/public/PublicLayout';
@@ -11,7 +12,6 @@ import SiteFooter from './components/public/SiteFooter';
 import WhatsAppFab from './components/public/WhatsappFab';
 import MetaTags from './components/shared/MegaTags';
 // import Toast from './components/shared/Toast';
-import SectionHeading from './components/shared/SectionHeading';
 import Button from './components/shared/Button';
 import LoginPage from './pages/AdminLoginPage';
 import CmsLayout from './components/cms/CmsLayout';
@@ -41,11 +41,18 @@ function PublicSite() {
       <MetaTags />
       <PublicLayout>
         <div className="hero">
-          <HeroCarousel />
-          <div className="wrap" style={{ paddingTop: 26, paddingBottom: 34 }}>
-            <SectionHeading eyebrow={strapline || undefined} title={business.headline} />
-            <p className="lead">{business.description}</p>
-            <Button variant="solid">Get a quote</Button>
+          <div className="hero-wrap">
+            <div className="hero-grid">
+              <div className="hero-copy">
+                <p className="eyebrow hero-kicker">{strapline || 'Built to last'}</p>
+                <h1 className="hero-title">{business.headline}</h1>
+                <p className="lead hero-lead">{business.description}</p>
+                <div className="hero-cta">
+                  <Button variant="solid">Get a quote</Button>
+                </div>
+              </div>
+              <HeroCarousel />
+            </div>
           </div>
         </div>
         <AboutSection />

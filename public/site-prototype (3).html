@@ -1,0 +1,1460 @@
+<!-- site prototype for inso purposes, and refer -->
+
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fabrication business site — mid-fi prototype</title>
+
+<meta name="description" id="meta-desc" content="">
+<link rel="icon" id="meta-favicon" href="">
+<meta property="og:type" content="website">
+<meta property="og:site_name" id="og-site" content="">
+<meta property="og:title" id="og-title" content="">
+<meta property="og:description" id="og-desc" content="">
+<meta property="og:image" id="og-image" content="">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_ZA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" id="tw-title" content="">
+<meta name="twitter:description" id="tw-desc" content="">
+<meta name="twitter:image" id="tw-image" content="">
+
+<style>
+  :root{
+    --ink:#111111;
+    --ink-soft:#5f5f5f;
+    --line:#d8d8d8;
+    --line-soft:#e9e9e9;
+    --bg:#ffffff;
+    --bg-alt:#f5f5f4;
+    --danger:#a3312a;
+    --radius:6px;
+    --wrap:1080px;
+    --header-h:60px;
+    --side-w:230px;
+
+    /* set from the single brand colour at runtime */
+    --brand:#2b2b2b;
+    --brand-on:#ffffff;
+    --brand-ink:#2b2b2b;
+    --brand-mid:#d8d8d8;
+    --brand-wash:#f5f5f4;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:var(--header-h)}
+  body{
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%;height:auto}
+  a{color:inherit;text-decoration:none}
+  svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  [hidden]{display:none !important}
+
+  .view{display:none}
+  .view.on{display:block}
+
+  .wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 20px}
+  .section{padding:44px 0;border-top:1px solid var(--line-soft)}
+  .eyebrow{
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--brand-ink);margin-bottom:10px;font-weight:600;
+  }
+  h1{font-size:26px;line-height:1.25;font-weight:600;margin-bottom:12px;color:var(--ink)}
+  h2{
+    font-size:21px;line-height:1.3;font-weight:600;margin-bottom:16px;color:var(--ink);
+    padding-bottom:10px;border-bottom:2px solid var(--brand-mid);
+  }
+  h3{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+  p{margin-bottom:14px;color:var(--ink-soft)}
+  p.lead{color:var(--ink)}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    min-height:48px;padding:0 20px;border:1px solid var(--ink);border-radius:var(--radius);
+    font-size:15px;font-weight:500;color:var(--ink);background:transparent;cursor:pointer;
+    font-family:inherit;
+  }
+  .btn-solid{background:var(--brand);color:var(--brand-on);border-color:var(--brand)}
+  .btn-solid svg{stroke:var(--brand-on)}
+  .btn-block{display:flex;width:100%}
+  .btn-sm{min-height:40px;padding:0 14px;font-size:14px}
+  .btn-quiet{border-color:var(--line);color:var(--ink-soft);background:transparent}
+
+  header{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+  .bar{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .brand img{width:38px;height:38px;border-radius:var(--radius);object-fit:cover}
+  .brand-name{font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;color:var(--ink)}
+  .brand-sub{font-size:11px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;display:block}
+  .menu-btn{
+    display:flex;align-items:center;justify-content:center;width:44px;height:44px;
+    border:1px solid var(--line);border-radius:var(--radius);background:transparent;
+    cursor:pointer;color:var(--ink);
+  }
+  .desktop-nav{display:none}
+
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;visibility:hidden;transition:opacity .2s;z-index:50}
+  .drawer{
+    position:fixed;top:0;right:0;height:100%;width:270px;max-width:82vw;background:var(--bg);
+    border-left:1px solid var(--line);transform:translateX(100%);transition:transform .22s ease;
+    z-index:60;display:flex;flex-direction:column;
+  }
+  body.nav-open .scrim{opacity:1;visibility:visible}
+  body.nav-open .drawer{transform:translateX(0)}
+  .drawer-head{height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line-soft)}
+  .drawer nav{padding:8px 0;flex:1;overflow-y:auto}
+  .drawer nav a,.drawer nav button.navitem{
+    display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+    padding:14px 20px;font-size:16px;border:0;border-bottom:1px solid var(--line-soft);
+    background:transparent;color:var(--ink);font-family:inherit;cursor:pointer;
+  }
+  .drawer nav button.navitem.active{background:var(--brand-wash);font-weight:600;box-shadow:inset 3px 0 0 var(--brand)}
+  .drawer-foot{padding:16px 20px;border-top:1px solid var(--line-soft)}
+
+  .hero{position:relative;background:var(--brand-wash)}
+  .slides{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+  .slides img.on{opacity:1}
+  .dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:8px}
+  .dots button{width:9px;height:9px;border-radius:50%;padding:0;border:1px solid #fff;background:transparent;cursor:pointer}
+  .dots button[aria-current="true"]{background:#fff}
+  .hero-copy{padding-top:26px;padding-bottom:34px}
+  .hero h1{border:0;padding:0}
+
+  .about-grid{display:grid;gap:20px}
+  .portrait{width:100%;border-radius:var(--radius);border:1px solid var(--line-soft);aspect-ratio:1/1;object-fit:cover}
+
+  .cards{display:grid;gap:16px}
+  .card{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--bg)}
+  .card img{width:100%;aspect-ratio:3/2;object-fit:cover;border-bottom:1px solid var(--line-soft)}
+  .card-body{padding:14px 16px 18px}
+  .card-body h3{border:0;padding:0}
+  .card-body p{margin:0;font-size:14px}
+
+  .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .gallery figure{margin:0}
+  .gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);border:1px solid var(--line-soft)}
+  .gallery figcaption{font-size:12px;color:var(--ink-soft);padding:6px 2px 0}
+
+  .contact-list{list-style:none;display:grid;gap:2px;margin-bottom:20px}
+  .contact-list li{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line-soft)}
+  .contact-list li svg{margin-top:2px;color:var(--brand-ink)}
+  .contact-list .label{font-size:12px;color:var(--ink-soft);display:block}
+  .contact-list .value{font-size:15px;color:var(--ink)}
+  .hours-note{font-size:14px}
+
+  footer{background:var(--brand-wash);border-top:1px solid var(--line);padding:32px 0 40px}
+  .foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .foot-brand img{width:34px;height:34px;border-radius:var(--radius);object-fit:cover}
+  .foot-address{display:inline-flex;gap:10px;align-items:flex-start;padding:12px 0;font-size:15px;color:var(--ink)}
+  .foot-address svg{color:var(--brand-ink)}
+  .compliance{margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-soft)}
+  .compliance dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin-bottom:12px}
+  .compliance dd{color:var(--ink)}
+  .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--brand-mid);border-radius:100px;padding:4px 12px 4px 8px;
+    font-size:12px;color:var(--ink);background:var(--bg);
+  }
+  .flag{width:18px;height:12px;border-radius:2px;border:1px solid rgba(0,0,0,.15);stroke:none;flex:none}
+  .credit{font-size:12px;color:var(--ink-soft);margin:0}
+  .credit-row{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .admin-link{
+    display:flex;align-items:center;justify-content:center;flex:none;width:40px;height:40px;
+    border:1px solid var(--line);border-radius:var(--radius);color:var(--ink-soft);background:var(--bg);cursor:pointer;
+  }
+  .admin-link:hover{color:var(--ink);border-color:var(--ink)}
+  .admin-link svg{width:18px;height:18px}
+
+  .fab{
+    position:fixed;right:16px;bottom:16px;z-index:30;display:flex;align-items:center;gap:8px;
+    height:52px;padding:0 18px;border-radius:100px;background:var(--brand);color:var(--brand-on);
+    font-size:14px;font-weight:500;border:none;cursor:pointer;
+  }
+  .fab svg{stroke:var(--brand-on)}
+
+  .login-wrap{
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:32px 20px;background:var(--bg-alt);
+  }
+  .login-card{
+    width:100%;max-width:380px;background:var(--bg);border:1px solid var(--line);
+    border-radius:var(--radius);padding:28px 24px 24px;
+  }
+  .login-card h2{border:0;padding:0;font-size:22px;margin-bottom:4px}
+  .login-logo{width:52px;height:52px;border-radius:var(--radius);margin-bottom:18px;object-fit:cover}
+  .login-card .sub{font-size:14px;color:var(--ink-soft);margin-bottom:22px}
+  .back-link{
+    display:inline-flex;align-items:center;gap:6px;margin-top:20px;
+    font-size:14px;color:var(--ink-soft);cursor:pointer;background:none;border:0;padding:0;font-family:inherit;
+  }
+  .back-link svg{width:16px;height:16px}
+  .help-note{margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:13px;color:var(--ink-soft)}
+
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  .field .hint{font-size:12px;color:var(--ink-soft);margin-bottom:8px}
+  .field input[type=text],.field input[type=email],.field input[type=password],.field input[type=tel],.field textarea,.field select{
+    width:100%;font-family:inherit;font-size:15px;color:var(--ink);background:var(--bg);
+    border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;min-height:48px;
+  }
+  .field textarea{min-height:120px;resize:vertical;line-height:1.5}
+  .field input:focus,.field textarea:focus{outline:2px solid var(--ink);outline-offset:-1px}
+  .row2{display:grid;gap:0}
+  .colour-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .colour-row input[type=color]{width:56px;height:48px;padding:0;border:1px solid var(--line);border-radius:var(--radius);background:none;cursor:pointer}
+  .tones{display:flex;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  .tones span{width:44px;height:48px;display:block}
+  .checkline{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line-soft);font-size:15px}
+  .checkline input{width:20px;height:20px}
+
+  .cms-bar{
+    height:var(--header-h);display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--bg);
+    position:sticky;top:0;z-index:40;
+  }
+  .cms-body{display:block}
+  .cms-side{display:none}
+  .cms-main{padding:20px 16px 60px;max-width:760px}
+  .page{display:none}
+  .page.on{display:block}
+  .page-head{margin-bottom:20px}
+  .page-head h2{margin-bottom:8px}
+  .page-head p{margin:0;font-size:14px}
+
+  .slot{
+    display:flex;gap:14px;align-items:center;border:1px solid var(--line);
+    border-radius:var(--radius);padding:12px;margin-bottom:12px;
+  }
+  .slot.empty{border-style:dashed}
+  .slot .thumb{width:96px;height:72px;object-fit:cover;border-radius:4px;flex:none;border:1px solid var(--line-soft);background:var(--bg-alt)}
+  .slot .ph{
+    width:96px;height:72px;border-radius:4px;flex:none;border:1px dashed var(--line);
+    display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink-soft);
+  }
+  .slot-body{flex:1;min-width:0}
+  .slot-label{font-size:14px;font-weight:600;margin-bottom:2px}
+  .slot-note{font-size:12px;color:var(--ink-soft);margin-bottom:8px}
+  .slot-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+  .service-block{border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+  .service-block h3{font-size:14px;color:var(--ink-soft);margin-bottom:14px}
+
+  .status{display:grid;gap:10px;margin-bottom:24px}
+  .status-item{
+    display:flex;align-items:center;gap:10px;border:1px solid var(--line);
+    border-radius:var(--radius);padding:12px 14px;font-size:15px;
+  }
+  .status-item .tick{color:var(--brand-ink)}
+  .status-item.todo{border-color:var(--ink)}
+  .status-item .go{margin-left:auto;font-size:13px;color:var(--ink-soft)}
+
+  .helpq{border-bottom:1px solid var(--line-soft);padding:16px 0}
+  .helpq h3{margin-bottom:4px}
+  .helpq p{margin:0;font-size:14px}
+
+  .savebar{display:flex;gap:10px;align-items:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--line-soft);flex-wrap:wrap}
+
+  .signout{
+    display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+    padding:14px 20px;font-size:16px;border:0;background:transparent;
+    color:var(--danger);font-family:inherit;cursor:pointer;
+  }
+  .signout-sep{margin-top:24px;border-top:1px solid var(--line)}
+
+  .toast{
+    position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+    background:var(--ink);color:#fff;font-size:14px;padding:12px 20px;border-radius:100px;
+    opacity:0;visibility:hidden;transition:all .2s;z-index:80;
+  }
+  .toast.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
+
+  .preview-card{
+    display:flex;gap:0;flex-direction:column;border:1px solid var(--line);
+    border-radius:var(--radius);overflow:hidden;max-width:340px;margin-top:12px;
+  }
+  .preview-card img{width:100%;aspect-ratio:1200/630;object-fit:cover;background:var(--bg-alt)}
+  .preview-card .pc-body{padding:10px 12px;background:var(--bg-alt)}
+  .preview-card .pc-title{font-size:13px;font-weight:600;color:var(--ink)}
+  .preview-card .pc-desc{font-size:12px;color:var(--ink-soft);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .preview-card .pc-host{font-size:11px;color:var(--ink-soft);margin-top:4px}
+
+  @media (min-width:768px){
+    :root{--header-h:72px}
+    h1{font-size:36px}
+    h2{font-size:26px}
+    .section{padding:64px 0}
+    .menu-btn{display:none}
+    .desktop-nav{display:flex;gap:26px;font-size:15px}
+    .desktop-nav a{padding:6px 0;border-bottom:2px solid transparent}
+    .desktop-nav a:hover{border-bottom-color:var(--brand)}
+    .hero{display:grid;grid-template-columns:1.1fr 1fr;align-items:center;gap:40px}
+    .slides{aspect-ratio:16/11}
+    .hero-copy{padding:40px 40px 40px 0}
+    .about-grid{grid-template-columns:280px 1fr;gap:36px;align-items:start}
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .gallery{grid-template-columns:repeat(3,1fr);gap:12px}
+    .contact-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+    .foot-cols{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+    .compliance{border-top:none;margin-top:0;padding-top:0}
+    .fab{display:none}
+    .row2{grid-template-columns:1fr 1fr;gap:0 20px}
+
+    .cms-body{display:flex;align-items:flex-start}
+    .cms-side{
+      display:flex;flex-direction:column;width:var(--side-w);flex:none;
+      border-right:1px solid var(--line);min-height:calc(100vh - var(--header-h));
+      position:sticky;top:var(--header-h);
+    }
+    .cms-side nav{padding:12px 0;flex:1}
+    .cms-side nav button{
+      display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+      padding:11px 20px;font-size:15px;border:0;background:transparent;
+      color:var(--ink-soft);font-family:inherit;cursor:pointer;
+    }
+    .cms-side nav button.active{background:var(--brand-wash);color:var(--ink);font-weight:600;box-shadow:inset 3px 0 0 var(--brand)}
+    .cms-side nav button svg{width:18px;height:18px}
+    .cms-main{flex:1;padding:28px 32px 80px}
+  }
+</style>
+</head>
+<body>
+
+<div class="view on" id="view-public">
+
+  <header>
+    <div class="wrap bar">
+      <a class="brand" href="#top">
+        <img data-src="branding.logo" alt="Business logo">
+        <span class="brand-name" data-text="business.name"></span>
+      </a>
+      <nav class="desktop-nav">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="menu-btn" id="open" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+
+  <aside class="drawer" id="drawer" aria-label="Site menu">
+    <div class="drawer-head">
+      <span class="brand-name">Menu</span>
+      <button class="menu-btn" id="close" aria-label="Close menu" style="display:flex">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <nav>
+      <a href="#top">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="drawer-foot">
+      <a class="btn btn-solid btn-block" data-href="_wa">
+        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.4 8.5 8.5 0 01-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 013.6 11 8.5 8.5 0 0112 3a8.4 8.4 0 019 8.5z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </aside>
+
+  <main id="top">
+
+    <section class="hero">
+      <div class="slides" id="slides">
+        <img class="on" data-src="hero.0" alt="Hero image one">
+        <img data-src="hero.1" data-hide-if-empty alt="Hero image two">
+        <div class="dots" id="dots">
+          <button aria-current="true" aria-label="Slide 1"></button>
+          <button aria-current="false" aria-label="Slide 2"></button>
+        </div>
+      </div>
+      <div class="wrap hero-copy">
+        <p class="eyebrow" data-text="_strapline"></p>
+        <h1 data-text="business.headline"></h1>
+        <p class="lead" data-text="business.description"></p>
+        <a class="btn btn-solid" href="#contact">Get a quote</a>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <p class="eyebrow">About</p>
+        <div class="about-grid">
+          <img class="portrait" data-src="about.portrait" alt="Portrait of the owner">
+          <div>
+            <h2>The person behind the work</h2>
+            <p data-text="about.story"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="wrap">
+        <p class="eyebrow">Services</p>
+        <h2>What we make</h2>
+        <div class="cards">
+          <article class="card" data-hide-if-empty="services.0.name">
+            <img data-src="services.0.image" alt="">
+            <div class="card-body"><h3 data-text="services.0.name"></h3><p data-text="services.0.description"></p></div>
+          </article>
+          <article class="card" data-hide-if-empty="services.1.name">
+            <img data-src="services.1.image" alt="">
+            <div class="card-body"><h3 data-text="services.1.name"></h3><p data-text="services.1.description"></p></div>
+          </article>
+          <article class="card" data-hide-if-empty="services.2.name">
+            <img data-src="services.2.image" alt="">
+            <div class="card-body"><h3 data-text="services.2.name"></h3><p data-text="services.2.description"></p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gallery">
+      <div class="wrap">
+        <p class="eyebrow">Gallery</p>
+        <h2>Our work</h2>
+        <div class="gallery">
+          <figure data-hide-if-empty="gallery.0.image"><img data-src="gallery.0.image" alt=""><figcaption data-text="gallery.0.label"></figcaption></figure>
+          <figure data-hide-if-empty="gallery.1.image"><img data-src="gallery.1.image" alt=""><figcaption data-text="gallery.1.label"></figcaption></figure>
+          <figure data-hide-if-empty="gallery.2.image"><img data-src="gallery.2.image" alt=""><figcaption data-text="gallery.2.label"></figcaption></figure>
+          <figure data-hide-if-empty="gallery.3.image"><img data-src="gallery.3.image" alt=""><figcaption data-text="gallery.3.label"></figcaption></figure>
+          <figure data-hide-if-empty="gallery.4.image"><img data-src="gallery.4.image" alt=""><figcaption data-text="gallery.4.label"></figcaption></figure>
+          <figure data-hide-if-empty="gallery.5.image"><img data-src="gallery.5.image" alt=""><figcaption data-text="gallery.5.label"></figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap">
+        <p class="eyebrow">Contact</p>
+        <h2>Get in touch</h2>
+        <div class="contact-cols">
+          <div>
+            <ul class="contact-list">
+              <li>
+                <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>
+                <span><span class="label">Phone</span><span class="value" data-text="contact.phone"></span></span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 6l8 6 8-6"/></svg>
+                <span><span class="label">Email</span><span class="value" data-text="contact.email"></span></span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.4 8.5 8.5 0 01-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 013.6 11 8.5 8.5 0 0112 3a8.4 8.4 0 019 8.5z"/></svg>
+                <span><span class="label">WhatsApp</span><span class="value" data-text="contact.whatsapp"></span></span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span><span class="label">Address, opens in maps</span><span class="value" data-text="contact.address"></span></span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul class="contact-list">
+              <li>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <span><span class="label">Trading hours</span><span class="value" data-text="contact.hours"></span></span>
+              </li>
+              <li data-hide-if-empty="_serves">
+                <svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+                <span><span class="label">How we serve you</span><span class="value" data-text="_serves"></span></span>
+              </li>
+            </ul>
+            <p class="hours-note">Hours vary with the job. Message us and we will confirm.</p>
+            <a class="btn btn-solid btn-block" data-href="_wa">
+              <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.4 8.5 8.5 0 01-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 013.6 11 8.5 8.5 0 0112 3a8.4 8.4 0 019 8.5z"/></svg>
+              Message on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap foot-cols">
+      <div>
+        <div class="foot-brand">
+          <img data-src="branding.logo" alt="Business logo">
+          <span class="brand-name" data-text="business.name"></span>
+        </div>
+        <a class="foot-address" data-href="_geo">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span data-text="contact.address"></span>
+        </a>
+      </div>
+      <div class="compliance">
+        <dl>
+          <dt>Registered name</dt><dd data-text="compliance.registeredName"></dd>
+          <dt>CIPC registration</dt><dd data-text="compliance.cipc"></dd>
+          <dt>Established</dt><dd data-text="compliance.established"></dd>
+        </dl>
+        <div class="badges">
+          <span class="badge" data-hide-if-empty="_psa"><svg class="flag" viewBox="0 0 90 60" aria-hidden="true"><rect width="90" height="60" fill="#fff"/><path d="M0 0h90v23H36z" fill="#DE3831"/><path d="M0 0v8l36 15h54v-23z" fill="#DE3831"/><path d="M0 60v-8l36-15h54v23z" fill="#002395"/><path d="M0 14l36 12h54v8H36L0 46z" fill="#007749"/><path d="M0 20l30 10L0 40z" fill="#FFB81C"/><path d="M0 24l23 6L0 36z" fill="#000"/></svg>South African owned</span>
+          <span class="badge" data-hide-if-empty="_bbee" data-text="_bbee"></span>
+        </div>
+        <div class="credit-row">
+          <p class="credit">Prototype. Data is stored in this browser only.</p>
+          <button class="admin-link" data-view="login" aria-label="Site administration" title="Site administration">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5 1.6 1.6 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.6 1.6 0 00.3-1.8 1.6 1.6 0 00-1.5-1H3a2 2 0 110-4h.1a1.6 1.6 0 001.5-1 1.6 1.6 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.6 1.6 0 001.8.3H9a1.6 1.6 0 001-1.5V3a2 2 0 114 0v.1a1.6 1.6 0 001 1.5 1.6 1.6 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 00-.3 1.8V9a1.6 1.6 0 001.5 1H21a2 2 0 110 4h-.1a1.6 1.6 0 00-1.5 1z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a class="fab" data-href="_wa">
+    <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.4 8.5 8.5 0 01-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 013.6 11 8.5 8.5 0 0112 3a8.4 8.4 0 019 8.5z"/></svg>
+    WhatsApp
+  </a>
+
+</div>
+
+<div class="view" id="view-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <img class="login-logo" data-src="branding.logo" alt="Business logo">
+      <h2>Sign in</h2>
+      <p class="sub">Manage your website.</p>
+
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" placeholder="name@business.co.za" autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Your password" autocomplete="current-password">
+      </div>
+
+      <button class="btn btn-solid btn-block" data-view="cms">Sign in</button>
+
+      <p class="help-note">Forgotten your password? Phone mLab and we will reset it for you.</p>
+
+      <button class="back-link" data-view="public">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        Back to the website
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-cms">
+
+  <div class="cms-bar">
+    <div class="brand">
+      <img data-src="branding.logo" alt="Business logo" style="width:34px;height:34px;border-radius:var(--radius)">
+      <span>
+        <span class="brand-name" data-text="business.name"></span>
+        <span class="brand-sub">Site manager</span>
+      </span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="btn btn-sm" data-view="public">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        View site
+      </button>
+      <button class="menu-btn" id="cms-open" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="scrim" id="cms-scrim"></div>
+
+  <aside class="drawer" id="cms-drawer" aria-label="Admin menu">
+    <div class="drawer-head">
+      <span class="brand-name">Menu</span>
+      <button class="menu-btn" id="cms-close" aria-label="Close menu" style="display:flex">
+        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <nav>
+      <button class="navitem active" data-page="dashboard">Dashboard</button>
+      <button class="navitem" data-page="details">Business details</button>
+      <button class="navitem" data-page="branding">Branding</button>
+      <button class="navitem" data-page="about">About</button>
+      <button class="navitem" data-page="services">Services</button>
+      <button class="navitem" data-page="gallery">Gallery</button>
+      <button class="navitem" data-page="contact">Contact and hours</button>
+      <button class="navitem" data-page="compliance">Compliance</button>
+      <button class="navitem" data-page="help">Help</button>
+      <div class="signout-sep">
+        <button class="signout" data-view="public">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+          Sign out
+        </button>
+      </div>
+    </nav>
+  </aside>
+
+  <div class="cms-body">
+
+    <aside class="cms-side">
+      <nav>
+        <button class="active" data-page="dashboard"><svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>Dashboard</button>
+        <button data-page="details"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>Business details</button>
+        <button data-page="branding"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/></svg>Branding</button>
+        <button data-page="about"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg>About</button>
+        <button data-page="services"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Services</button>
+        <button data-page="gallery"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3z"/><circle cx="8.5" cy="10" r="1.5"/><path d="M21 16l-5-5-6 6"/></svg>Gallery</button>
+        <button data-page="contact"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8.1 9.9a16 16 0 006 6l1.3-1.2a2 2 0 012.1-.5c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg>Contact and hours</button>
+        <button data-page="compliance"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.4 8.4-8 9-4.6-.6-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Compliance</button>
+        <button data-page="help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 013.6-2.2c1 .5 1.5 1.6 1.2 2.7-.3 1-1.3 1.5-1.9 2-.3.3-.4.7-.4 1.1"/><path d="M12 17h.01"/></svg>Help</button>
+        <div class="signout-sep">
+          <button class="signout" data-view="public">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>
+            Sign out
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="cms-main">
+
+      <section class="page on" data-panel="dashboard">
+        <div class="page-head">
+          <h2>Dashboard</h2>
+          <p>What is on your site, and what is still missing.</p>
+        </div>
+        <div class="status" id="status"></div>
+        <button class="btn" data-view="public">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          View your site
+        </button>
+      </section>
+
+      <section class="page" data-panel="details">
+        <div class="page-head">
+          <h2>Business details</h2>
+          <p>Your name and the words at the top of your home page.</p>
+        </div>
+        <div class="field">
+          <label>Business name</label>
+          <input type="text" data-bind="business.name">
+        </div>
+        <div class="field">
+          <label>Headline</label>
+          <p class="hint">The big sentence on your home page.</p>
+          <input type="text" data-bind="business.headline">
+        </div>
+        <div class="field">
+          <label>Short description</label>
+          <p class="hint">Also used when someone shares your link on WhatsApp.</p>
+          <textarea data-bind="business.description"></textarea>
+        </div>
+        <div class="savebar">
+          <button class="btn btn-solid" data-save>Save changes</button>
+        </div>
+      </section>
+
+      <section class="page" data-panel="branding">
+        <div class="page-head">
+          <h2>Branding</h2>
+          <p>Your logo, your colour, and the picture people see when your link is shared.</p>
+        </div>
+
+        <div class="slot" data-img="branding.logo">
+          <img class="thumb" alt="Current logo">
+          <div class="slot-body">
+            <div class="slot-label">Logo</div>
+            <div class="slot-note">Used in the menu bar, the footer, and as the small icon in the browser tab.</div>
+            <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:22px">
+          <label>Your colour</label>
+          <p class="hint">One colour. Everything else on the site is black text on white, so this is the only colour choice to make.</p>
+          <div class="colour-row">
+            <input type="color" data-bind="branding.colour" id="colour">
+            <div class="tones" aria-hidden="true">
+              <span id="tone-1"></span><span id="tone-2"></span><span id="tone-3"></span><span id="tone-4"></span>
+            </div>
+            <button class="btn btn-sm btn-solid" style="pointer-events:none">Button preview</button>
+          </div>
+        </div>
+
+        <div class="slot" data-img="branding.share" style="margin-top:22px">
+          <img class="thumb" alt="Current share image">
+          <div class="slot-body">
+            <div class="slot-label">Share picture</div>
+            <div class="slot-note">Shows when your link is sent on WhatsApp or Facebook. Make one from your logo and hero photo, or upload your own.</div>
+            <div class="slot-actions">
+              <button class="btn btn-sm" id="gen-share">Make one for me</button>
+              <button class="btn btn-sm btn-quiet" data-pick>Upload instead</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="preview-card">
+          <img id="pc-img" alt="">
+          <div class="pc-body">
+            <div class="pc-title" data-text="business.name"></div>
+            <div class="pc-desc" data-text="business.description"></div>
+            <div class="pc-host">businessname.co.za</div>
+          </div>
+        </div>
+
+        <div class="savebar">
+          <button class="btn btn-solid" data-save>Save changes</button>
+        </div>
+      </section>
+
+      <section class="page" data-panel="about">
+        <div class="page-head">
+          <h2>About</h2>
+          <p>Your photo and the story of the business.</p>
+        </div>
+        <div class="slot" data-img="about.portrait">
+          <img class="thumb" alt="Current owner portrait">
+          <div class="slot-body">
+            <div class="slot-label">Owner photo</div>
+            <div class="slot-note">A clear photo of you, facing the camera.</div>
+            <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+          </div>
+        </div>
+        <div class="field" style="margin-top:22px">
+          <label>Your story</label>
+          <p class="hint">How you started and what you are known for.</p>
+          <textarea data-bind="about.story"></textarea>
+        </div>
+        <div class="savebar">
+          <button class="btn btn-solid" data-save>Save changes</button>
+        </div>
+      </section>
+
+      <section class="page" data-panel="services">
+        <div class="page-head">
+          <h2>Services</h2>
+          <p>Up to three. Leave a name blank to hide that service.</p>
+        </div>
+
+        <div class="service-block">
+          <h3>Service one</h3>
+          <div class="slot" data-img="services.0.image">
+            <img class="thumb" alt="">
+            <div class="slot-body">
+              <div class="slot-label">Photo</div>
+              <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+            </div>
+          </div>
+          <div class="field" style="margin-top:14px"><label>Name</label><input type="text" data-bind="services.0.name"></div>
+          <div class="field" style="margin-bottom:0"><label>Description</label><input type="text" data-bind="services.0.description"></div>
+        </div>
+
+        <div class="service-block">
+          <h3>Service two</h3>
+          <div class="slot" data-img="services.1.image">
+            <img class="thumb" alt="">
+            <div class="slot-body">
+              <div class="slot-label">Photo</div>
+              <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+            </div>
+          </div>
+          <div class="field" style="margin-top:14px"><label>Name</label><input type="text" data-bind="services.1.name"></div>
+          <div class="field" style="margin-bottom:0"><label>Description</label><input type="text" data-bind="services.1.description"></div>
+        </div>
+
+        <div class="service-block">
+          <h3>Service three</h3>
+          <div class="slot" data-img="services.2.image">
+            <img class="thumb" alt="">
+            <div class="slot-body">
+              <div class="slot-label">Photo</div>
+              <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+            </div>
+          </div>
+          <div class="field" style="margin-top:14px"><label>Name</label><input type="text" data-bind="services.2.name" placeholder="Leave blank to hide this service"></div>
+          <div class="field" style="margin-bottom:0"><label>Description</label><input type="text" data-bind="services.2.description"></div>
+        </div>
+
+        <div class="savebar">
+          <button class="btn btn-solid" data-save>Save changes</button>
+        </div>
+      </section>
+
+      <section class="page" data-panel="gallery">
+        <div class="page-head">
+          <h2>Gallery</h2>
+          <p>Six places for photos. The first three are needed, the rest are optional.</p>
+        </div>
+
+        <div class="slot" data-img="gallery.0.image">
+          <img class="thumb" alt="">
+          <div class="slot-body">
+            <div class="slot-label">Premises</div>
+            <div class="slot-note">Your workshop or yard.</div>
+            <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+          </div>
+        </div>
+
+        <div class="slot" data-img="gallery.1.image">
+          <img class="thumb" alt="">
+          <div class="slot-body">
+            <div class="slot-label">Work</div>
+            <div class="slot-note">A job finished or being made.</div>
+            <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+          </div>
+        </div>
+
+        <div class="slot" data-img="gallery.2.image">
+          <img class="thumb" alt="">
+          <div class="slot-body">
+            <div class="slot-label">Delivery</div>
+            <div class="slot-note">Loading, delivering or installing.</div>
+            <div class="slot-actions"><button class="btn btn-sm" data-pick>Replace</button></div>
+          </div>
+        </div>
+
+        <div class="slot" data-img="gallery.3.image">
+          <img class="thumb" alt="">
+          <div class="slot-body">
+            <div class="slot-label">Premises, second photo</div>
+            <div class="slot-note">Optional.</div>
+            <div class="slot-actions">
+              <button class="btn btn-sm" data-pick>Replace</button>
+              <button class="btn btn-sm btn-quiet" data-clear>Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="slot" data-img="gallery.4.image">
+          <img class="thumb" alt="">
+          <div class="slot-body">
+            <div class="slot-label">Work, second photo</div>
+            <div class="slot-note">Optional.</div>
+            <div class="slot-actions">
+              <button class="btn btn-sm" data-pick>Replace</button>
+              <button class="btn btn-sm btn-quiet" data-clear>Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="slot" data-img="gallery.5.image">
+          <img class="thumb" alt="">
+          <div class="slot-body">
+            <div class="slot-label">Delivery, second photo</div>
+            <div class="slot-note">Optional.</div>
+            <div class="slot-actions">
+              <button class="btn btn-sm" data-pick>Replace</button>
+              <button class="btn btn-sm btn-quiet" data-clear>Remove</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-panel="contact">
+        <div class="page-head">
+          <h2>Contact and hours</h2>
+          <p>How customers reach you and when you are open.</p>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Phone number</label><input type="tel" data-bind="contact.phone"></div>
+          <div class="field"><label>WhatsApp number</label><input type="tel" data-bind="contact.whatsapp"></div>
+        </div>
+        <div class="field"><label>Email address</label><input type="email" data-bind="contact.email"></div>
+        <div class="field">
+          <label>Address</label>
+          <p class="hint">Type it once. Customers tap it and their phone opens directions.</p>
+          <input type="text" data-bind="contact.address">
+        </div>
+        <div class="field">
+          <label>Trading hours</label>
+          <input type="text" data-bind="contact.hours">
+        </div>
+        <div class="field">
+          <label>How you serve customers</label>
+          <label class="checkline"><input type="checkbox" data-bind="contact.delivers"> We deliver</label>
+          <label class="checkline"><input type="checkbox" data-bind="contact.walkins"> We take walk-ins</label>
+        </div>
+        <div class="savebar">
+          <button class="btn btn-solid" data-save>Save changes</button>
+        </div>
+      </section>
+
+      <section class="page" data-panel="compliance">
+        <div class="page-head">
+          <h2>Compliance</h2>
+          <p>Registration details for the bottom of your site. Set these once.</p>
+        </div>
+        <div class="field"><label>Registered name</label><input type="text" data-bind="compliance.registeredName"></div>
+        <div class="row2">
+          <div class="field"><label>CIPC registration number</label><input type="text" data-bind="compliance.cipc"></div>
+          <div class="field"><label>Year established</label><input type="text" data-bind="compliance.established"></div>
+        </div>
+        <div class="field">
+          <label>Badges</label>
+          <label class="checkline"><input type="checkbox" data-bind="compliance.southAfrican"> South African owned business</label>
+        </div>
+        <div class="field">
+          <label>B-BBEE level</label>
+          <select data-bind="compliance.bbee">
+            <option value="">Not certified</option>
+            <option value="B-BBEE Level 1">Level 1</option>
+            <option value="B-BBEE Level 2">Level 2</option>
+            <option value="B-BBEE Level 4">Level 4</option>
+          </select>
+        </div>
+        <div class="savebar">
+          <button class="btn btn-solid" data-save>Save changes</button>
+        </div>
+      </section>
+
+      <section class="page" data-panel="help">
+        <div class="page-head">
+          <h2>Help</h2>
+          <p>Short instructions for the things you will do most often.</p>
+        </div>
+        <div class="helpq"><h3>How do I change a photo?</h3><p>Open Gallery, find the photo you want to change, and press Replace. Choose a new photo from your phone.</p></div>
+        <div class="helpq"><h3>How do I change my trading hours?</h3><p>Open Contact and hours, type the new hours, and press Save changes.</p></div>
+        <div class="helpq"><h3>Why does my link look plain when I send it?</h3><p>Open Branding and set a share picture. That is the photo people see when you send your link on WhatsApp.</p></div>
+        <div class="helpq"><h3>Why only one colour?</h3><p>All the writing on your site is black on white so that it is easy to read. Your colour is used for the buttons and the small details.</p></div>
+        <div class="helpq"><h3>Something looks wrong on the site</h3><p>Phone mLab. We look after this site and there is no charge to fix it.</p></div>
+        <div class="savebar">
+          <button class="btn btn-quiet" id="reset">Reset the prototype to its starting content</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var KEY = 'fabsite.v3';
+  var PH = 'https://placehold.co/';
+
+  var DEFAULTS = {
+    business: {
+      name: 'Business Name',
+      headline: 'Built to order, delivered to site.',
+      description: 'Steel and aluminium fabrication in Pietermaritzburg. We make to order, we deliver, and we take walk-ins.'
+    },
+    branding: {
+      logo: PH + '160x160/e5e5e5/999999?text=LOGO',
+      colour: '#1f5c3d',
+      share: PH + '1200x630/dcdcdc/8a8a8a?text=Share+picture'
+    },
+    hero: [ PH + '1200x900/dcdcdc/8a8a8a?text=Hero+1', PH + '1200x900/d0d0d0/8a8a8a?text=Hero+2' ],
+    about: {
+      portrait: PH + '600x600/e0e0e0/8a8a8a?text=Owner',
+      story: 'A short account of how the business started, written from an interview with the owner. Where they trained, when they opened, and what they are known for locally.'
+    },
+    services: [
+      { name: 'Welding', description: 'On-site and workshop welding for steel and mild steel.', image: PH + '600x400/dcdcdc/8a8a8a?text=Service+1' },
+      { name: 'Aluminium', description: 'Windows, doors and custom aluminium fabrication.', image: PH + '600x400/d6d6d6/8a8a8a?text=Service+2' },
+      { name: 'Boiler making', description: 'Tanks, frames and heavy structural work.', image: PH + '600x400/d0d0d0/8a8a8a?text=Service+3' }
+    ],
+    gallery: [
+      { label: 'Premises', image: PH + '800x600/dedede/8a8a8a?text=Premises+1' },
+      { label: 'Work', image: PH + '800x600/d8d8d8/8a8a8a?text=Work+1' },
+      { label: 'Delivery', image: PH + '800x600/d2d2d2/8a8a8a?text=Delivery+1' },
+      { label: 'Premises', image: '' },
+      { label: 'Work', image: '' },
+      { label: 'Delivery', image: '' }
+    ],
+    contact: {
+      phone: '033 000 0000',
+      whatsapp: '072 000 0000',
+      email: 'name@business.co.za',
+      address: '00 Street Name, Suburb, Pietermaritzburg',
+      hours: 'Monday to Sunday, 08:00 to 17:00',
+      delivers: true,
+      walkins: true
+    },
+    compliance: {
+      registeredName: 'Business Name (Pty) Ltd',
+      cipc: '0000/000000/07',
+      established: '2020',
+      southAfrican: true,
+      bbee: ''
+    }
+  };
+
+  var state;
+  function clone(o){ return JSON.parse(JSON.stringify(o)); }
+
+  function load(){
+    try {
+      var raw = localStorage.getItem(KEY);
+      state = raw ? JSON.parse(raw) : clone(DEFAULTS);
+    } catch (e) { state = clone(DEFAULTS); }
+  }
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(state)); }
+    catch (e) { toast('Could not save. Browser storage is full.'); }
+  }
+
+  function get(path){
+    var parts = path.split('.'), cur = state;
+    for (var i = 0; i < parts.length; i++){
+      if (cur === undefined || cur === null) return '';
+      cur = cur[parts[i]];
+    }
+    return cur === undefined || cur === null ? '' : cur;
+  }
+  function set(path, val){
+    var parts = path.split('.'), cur = state;
+    for (var i = 0; i < parts.length - 1; i++){
+      if (cur[parts[i]] === undefined) cur[parts[i]] = {};
+      cur = cur[parts[i]];
+    }
+    cur[parts[parts.length - 1]] = val;
+  }
+
+  /* ---- colour ---- */
+  function hexToRgb(hex){
+    hex = (hex || '#000000').replace('#','');
+    if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    return { r: parseInt(hex.slice(0,2),16), g: parseInt(hex.slice(2,4),16), b: parseInt(hex.slice(4,6),16) };
+  }
+  function rgbToHsl(c){
+    var r = c.r/255, g = c.g/255, b = c.b/255;
+    var max = Math.max(r,g,b), min = Math.min(r,g,b);
+    var h, s, l = (max+min)/2;
+    if (max === min){ h = 0; s = 0; }
+    else {
+      var d = max-min;
+      s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+      if (max === r) h = ((g-b)/d + (g < b ? 6 : 0));
+      else if (max === g) h = (b-r)/d + 2;
+      else h = (r-g)/d + 4;
+      h = h/6;
+    }
+    return { h: h*360, s: s*100, l: l*100 };
+  }
+  function hsl(h, s, l){ return 'hsl(' + Math.round(h) + ' ' + Math.round(s) + '% ' + Math.round(l) + '%)'; }
+  function luminance(c){
+    function ch(v){ v = v/255; return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4); }
+    return 0.2126*ch(c.r) + 0.7152*ch(c.g) + 0.0722*ch(c.b);
+  }
+
+  function applyColour(){
+    var hex = state.branding.colour || '#1f5c3d';
+    var rgb = hexToRgb(hex);
+    var c = rgbToHsl(rgb);
+    var root = document.documentElement.style;
+
+    root.setProperty('--brand', hex);
+    root.setProperty('--brand-on', luminance(rgb) > 0.45 ? '#111111' : '#ffffff');
+    root.setProperty('--brand-ink', hsl(c.h, Math.min(c.s, 70), Math.min(c.l, 34)));
+    root.setProperty('--brand-mid', hsl(c.h, c.s * 0.45, 80));
+    root.setProperty('--brand-wash', hsl(c.h, c.s * 0.30, 96));
+
+    var t1 = document.getElementById('tone-1');
+    if (t1){
+      t1.style.background = hex;
+      document.getElementById('tone-2').style.background = hsl(c.h, Math.min(c.s,70), Math.min(c.l,34));
+      document.getElementById('tone-3').style.background = hsl(c.h, c.s*0.45, 80);
+      document.getElementById('tone-4').style.background = hsl(c.h, c.s*0.30, 96);
+    }
+  }
+
+  function derived(key){
+    if (key === '_strapline'){
+      var names = [];
+      for (var i = 0; i < state.services.length; i++){
+        var n = (state.services[i].name || '').trim();
+        if (n) names.push(n);
+      }
+      return names.join(' \u00b7 ');
+    }
+    if (key === '_serves'){
+      var parts = [];
+      if (state.contact.delivers) parts.push('We deliver');
+      if (state.contact.walkins) parts.push('we take walk-ins');
+      if (!parts.length) return '';
+      return parts.join(', ');
+    }
+    if (key === '_psa') return state.compliance.southAfrican ? 'yes' : '';
+    if (key === '_bbee') return state.compliance.bbee || '';
+    if (key === '_geo'){
+      var a = (state.contact.address || '').trim();
+      return a ? 'geo:0,0?q=' + encodeURIComponent(a) : '#';
+    }
+    if (key === '_wa'){
+      var w = (state.contact.whatsapp || '').replace(/\D/g, '');
+      if (!w) return '#';
+      if (w.charAt(0) === '0') w = '27' + w.slice(1);
+      return 'https://wa.me/' + w;
+    }
+    return '';
+  }
+  function value(path){ return path.charAt(0) === '_' ? derived(path) : get(path); }
+
+  function applyMeta(){
+    var name = state.business.name || '';
+    var strap = derived('_strapline');
+    var title = strap ? name + ' | ' + strap : name;
+    var desc = state.business.description || '';
+    var share = state.branding.share || state.hero[0] || '';
+
+    document.title = title;
+    document.getElementById('meta-desc').content = desc;
+    document.getElementById('meta-favicon').href = state.branding.logo || '';
+    document.getElementById('og-site').content = name;
+    document.getElementById('og-title').content = title;
+    document.getElementById('og-desc').content = desc;
+    document.getElementById('og-image').content = share;
+    document.getElementById('tw-title').content = title;
+    document.getElementById('tw-desc').content = desc;
+    document.getElementById('tw-image').content = share;
+
+    var pc = document.getElementById('pc-img');
+    if (pc) pc.src = share;
+  }
+
+  function render(){
+    applyColour();
+
+    var texts = document.querySelectorAll('[data-text]');
+    for (var i = 0; i < texts.length; i++) texts[i].textContent = value(texts[i].getAttribute('data-text'));
+
+    var srcs = document.querySelectorAll('[data-src]');
+    for (var j = 0; j < srcs.length; j++){
+      var v = value(srcs[j].getAttribute('data-src'));
+      if (v) { srcs[j].src = v; srcs[j].hidden = false; }
+      else if (srcs[j].hasAttribute('data-hide-if-empty')) srcs[j].hidden = true;
+    }
+    var hrefs = document.querySelectorAll('[data-href]');
+    for (var h = 0; h < hrefs.length; h++) hrefs[h].setAttribute('href', value(hrefs[h].getAttribute('data-href')));
+
+    var hides = document.querySelectorAll('[data-hide-if-empty]');
+    for (var k = 0; k < hides.length; k++){
+      var p = hides[k].getAttribute('data-hide-if-empty');
+      if (!p) continue;
+      hides[k].hidden = !value(p);
+    }
+
+    var slots = document.querySelectorAll('[data-img]');
+    for (var s = 0; s < slots.length; s++){
+      var slot = slots[s];
+      var img = slot.querySelector('.thumb');
+      var val = get(slot.getAttribute('data-img'));
+      var ph = slot.querySelector('.ph');
+      if (val){
+        slot.classList.remove('empty');
+        img.hidden = false; img.src = val;
+        if (ph) ph.remove();
+      } else {
+        slot.classList.add('empty');
+        img.hidden = true;
+        if (!ph){
+          ph = document.createElement('div');
+          ph.className = 'ph';
+          ph.textContent = 'Empty';
+          slot.insertBefore(ph, slot.firstChild);
+        }
+      }
+    }
+
+    var binds = document.querySelectorAll('[data-bind]');
+    for (var b = 0; b < binds.length; b++){
+      var el = binds[b], val2 = get(el.getAttribute('data-bind'));
+      if (el.type === 'checkbox') el.checked = !!val2; else el.value = val2;
+    }
+
+    applyMeta();
+    renderStatus();
+    setSlides();
+  }
+
+  function renderStatus(){
+    var filled = 0;
+    for (var i = 0; i < state.gallery.length; i++) if (state.gallery[i].image) filled++;
+    var strap = derived('_strapline');
+    var svcs = strap ? strap.split(' \u00b7 ').length : 0;
+
+    var items = [
+      { label: 'Business details', ok: !!(state.business.name && state.business.headline), page: 'details' },
+      { label: 'Logo, colour and share picture', ok: !!(state.branding.logo && state.branding.share), page: 'branding' },
+      { label: 'About and owner photo', ok: !!(state.about.portrait && state.about.story), page: 'about' },
+      { label: 'Services, ' + svcs + ' of 3', ok: svcs >= 1, page: 'services' },
+      { label: 'Gallery, ' + filled + ' of 6 photos', ok: filled >= 3, page: 'gallery' },
+      { label: 'Contact and hours', ok: !!(state.contact.phone && state.contact.address), page: 'contact' },
+      { label: 'Compliance details', ok: !!state.compliance.cipc, page: 'compliance' }
+    ];
+
+    var tick = '<svg class="tick" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>';
+    var warn = '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>';
+    var html = '';
+    for (var n = 0; n < items.length; n++){
+      var it = items[n];
+      html += '<div class="status-item' + (it.ok ? '' : ' todo') + '" data-page="' + it.page + '" style="cursor:pointer">' +
+              (it.ok ? tick : warn) + it.label +
+              '<span class="go">' + (it.ok ? 'Done' : 'Needs attention') + '</span></div>';
+    }
+    document.getElementById('status').innerHTML = html;
+  }
+
+  function toast(msg){
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('on');
+    setTimeout(function(){ t.classList.remove('on'); }, 1800);
+  }
+
+  var picker = document.createElement('input');
+  picker.type = 'file';
+  picker.accept = 'image/*';
+  picker.style.display = 'none';
+  document.body.appendChild(picker);
+  var pickTarget = null;
+
+  picker.addEventListener('change', function(){
+    var file = picker.files && picker.files[0];
+    if (!file || !pickTarget) return;
+    var wide = pickTarget === 'branding.share';
+    shrink(file, wide ? 1200 : 1200, function(dataUrl){
+      set(pickTarget, dataUrl);
+      save(); render(); toast('Photo updated');
+      pickTarget = null; picker.value = '';
+    });
+  });
+
+  function shrink(file, max, done){
+    var reader = new FileReader();
+    reader.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var w = img.width, h = img.height;
+        if (w > max || h > max){
+          if (w > h) { h = Math.round(h * max / w); w = max; }
+          else { w = Math.round(w * max / h); h = max; }
+        }
+        var c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        done(c.toDataURL('image/jpeg', 0.75));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function loadImage(src){
+    return new Promise(function(resolve, reject){
+      if (!src) { reject(new Error('no source')); return; }
+      var img = new Image();
+      if (src.indexOf('data:') !== 0) img.crossOrigin = 'anonymous';
+      img.onload = function(){ resolve(img); };
+      img.onerror = function(){ reject(new Error('could not load')); };
+      img.src = src;
+    });
+  }
+
+  function drawCover(ctx, img, w, h){
+    var ir = img.width / img.height, cr = w / h, sw, sh, sx, sy;
+    if (ir > cr){ sh = img.height; sw = sh * cr; sx = (img.width - sw) / 2; sy = 0; }
+    else { sw = img.width; sh = sw / cr; sx = 0; sy = (img.height - sh) / 2; }
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, w, h);
+  }
+
+  function roundRect(ctx, x, y, w, h, r){
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function generateShare(){
+    var W = 1200, H = 630;
+    var c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    var ctx = c.getContext('2d');
+    var rgb = hexToRgb(state.branding.colour || '#1f5c3d');
+    var brand = 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',';
+
+    loadImage(state.hero[0]).catch(function(){ return null; }).then(function(hero){
+      if (hero){
+        drawCover(ctx, hero, W, H);
+      } else {
+        ctx.fillStyle = 'rgb(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ')';
+        ctx.fillRect(0, 0, W, H);
+      }
+
+      var g = ctx.createLinearGradient(0, 0, W, H);
+      g.addColorStop(0, brand + '0.94)');
+      g.addColorStop(0.5, brand + '0.78)');
+      g.addColorStop(1, brand + '0.55)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
+
+      var v = ctx.createRadialGradient(W/2, H/2, H*0.25, W/2, H/2, H*0.85);
+      v.addColorStop(0, 'rgba(0,0,0,0)');
+      v.addColorStop(1, 'rgba(0,0,0,0.28)');
+      ctx.fillStyle = v;
+      ctx.fillRect(0, 0, W, H);
+
+      return loadImage(state.branding.logo).catch(function(){ return null; });
+    }).then(function(logo){
+      var plate = 340, px = (W - plate) / 2, py = (H - plate) / 2;
+
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.25)';
+      ctx.shadowBlur = 40;
+      ctx.shadowOffsetY = 10;
+      ctx.fillStyle = '#ffffff';
+      roundRect(ctx, px, py, plate, plate, 28);
+      ctx.fill();
+      ctx.restore();
+
+      if (logo){
+        var pad = 44, box = plate - pad * 2;
+        var lr = logo.width / logo.height, lw, lh;
+        if (lr > 1){ lw = box; lh = box / lr; } else { lh = box; lw = box * lr; }
+        ctx.drawImage(logo, px + (plate - lw) / 2, py + (plate - lh) / 2, lw, lh);
+      }
+
+      try {
+        var url = c.toDataURL('image/png');
+        set('branding.share', url);
+        save(); render(); toast('Share picture made');
+      } catch (err) {
+        toast('Could not build the picture from these images');
+      }
+    });
+  }
+
+  var body = document.body;
+
+  function showView(name){
+    var list = document.querySelectorAll('.view');
+    for (var i = 0; i < list.length; i++) list[i].classList.toggle('on', list[i].id === 'view-' + name);
+    body.classList.remove('nav-open');
+    window.scrollTo(0, 0);
+  }
+  function showPage(name){
+    var pages = document.querySelectorAll('.page');
+    for (var i = 0; i < pages.length; i++) pages[i].classList.toggle('on', pages[i].getAttribute('data-panel') === name);
+    var navs = document.querySelectorAll('nav [data-page]');
+    for (var j = 0; j < navs.length; j++) navs[j].classList.toggle('active', navs[j].getAttribute('data-page') === name);
+    body.classList.remove('nav-open');
+    window.scrollTo(0, 0);
+  }
+
+  document.addEventListener('input', function(e){
+    var el = e.target;
+    if (el.id === 'colour'){
+      state.branding.colour = el.value;
+      applyColour();
+    }
+  });
+
+  document.addEventListener('click', function(e){
+    var el = e.target;
+    if (!el.closest) return;
+
+    var pick = el.closest('[data-pick]');
+    if (pick){ pickTarget = pick.closest('[data-img]').getAttribute('data-img'); picker.click(); return; }
+
+    var clear = el.closest('[data-clear]');
+    if (clear){
+      set(clear.closest('[data-img]').getAttribute('data-img'), '');
+      save(); render(); toast('Photo removed'); return;
+    }
+
+    var saveBtn = el.closest('[data-save]');
+    if (saveBtn){
+      var page = saveBtn.closest('.page');
+      var fields = page.querySelectorAll('[data-bind]');
+      for (var i = 0; i < fields.length; i++){
+        var f = fields[i];
+        set(f.getAttribute('data-bind'), f.type === 'checkbox' ? f.checked : f.value);
+      }
+      save(); render(); toast('Saved'); return;
+    }
+
+    var v = el.closest('[data-view]');
+    if (v){ showView(v.getAttribute('data-view')); return; }
+
+    var p = el.closest('[data-page]');
+    if (p){ showPage(p.getAttribute('data-page')); }
+  });
+
+  document.getElementById('gen-share').addEventListener('click', generateShare);
+
+  document.getElementById('reset').addEventListener('click', function(){
+    state = clone(DEFAULTS);
+    save(); render(); toast('Reset to starting content');
+  });
+
+  function bindDrawer(openId, closeId, scrimId){
+    var o = document.getElementById(openId);
+    var c = document.getElementById(closeId);
+    var s = document.getElementById(scrimId);
+    if (!o) return;
+    o.addEventListener('click', function(){ body.classList.add('nav-open'); o.setAttribute('aria-expanded','true'); });
+    c.addEventListener('click', function(){ body.classList.remove('nav-open'); o.setAttribute('aria-expanded','false'); });
+    s.addEventListener('click', function(){ body.classList.remove('nav-open'); o.setAttribute('aria-expanded','false'); });
+  }
+  bindDrawer('open','close','scrim');
+  bindDrawer('cms-open','cms-close','cms-scrim');
+
+  var drawerLinks = document.querySelectorAll('#drawer nav a, #drawer .drawer-foot a');
+  for (var k = 0; k < drawerLinks.length; k++){
+    drawerLinks[k].addEventListener('click', function(){ body.classList.remove('nav-open'); });
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') body.classList.remove('nav-open');
+  });
+
+  var slides = document.querySelectorAll('#slides img');
+  var dots = document.querySelectorAll('#dots button');
+  var idx = 0, timer = null;
+
+  function visibleSlides(){
+    var out = [];
+    for (var i = 0; i < slides.length; i++) if (!slides[i].hidden) out.push(i);
+    return out;
+  }
+  function show(n){
+    idx = n;
+    for (var i = 0; i < slides.length; i++) slides[i].classList.toggle('on', i === n);
+    for (var j = 0; j < dots.length; j++) dots[j].setAttribute('aria-current', j === n ? 'true' : 'false');
+  }
+  function setSlides(){
+    var vis = visibleSlides();
+    for (var d = 0; d < dots.length; d++) dots[d].hidden = vis.length < 2 || vis.indexOf(d) === -1;
+    if (timer) clearInterval(timer);
+    show(vis.length ? vis[0] : 0);
+    if (vis.length > 1){
+      timer = setInterval(function(){
+        var v = visibleSlides();
+        var at = v.indexOf(idx);
+        show(v[(at + 1) % v.length]);
+      }, 6000);
+    }
+  }
+  for (var dd = 0; dd < dots.length; dd++){
+    (function(n){ dots[n].addEventListener('click', function(){ show(n); }); })(dd);
+  }
+
+  load();
+  render();
+})();
+</script>
+
+</body>
+</html>
