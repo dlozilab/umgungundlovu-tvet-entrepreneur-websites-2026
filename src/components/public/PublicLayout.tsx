@@ -38,9 +38,13 @@ export default function PublicLayout({children}: PublicLayoutProps){
 
     return (
         <div id="top" className={styles.page}>
-            <AppBar logo={business.logoPath ? getPublicUrl(business.logoPath) : undefined} 
-            title={business.name} subtitle={strapline || undefined}
-            onMenu={()=> dispatch(openNav())}/>
+            <AppBar
+                logo={business.logoPath ? getPublicUrl(business.logoPath) : undefined}
+                title={business.name}
+                subtitle={strapline || undefined}
+                onMenu={() => dispatch(openNav())}
+                navItems={NAV_ITEMS}
+            />
 
             <Drawer open={navOpen} onClose={() => dispatch(closeNav())}>
                 <NavList items={NAV_ITEMS} onSelect={() => dispatch(closeNav())}/>
