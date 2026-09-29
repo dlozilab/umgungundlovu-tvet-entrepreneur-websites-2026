@@ -25,8 +25,6 @@ export default function HeroCarousel() {
         return <div className={styles.empty} aria-hidden="true" />;
     }
 
-    const currentSlide = slides[active];
-
     const showSlide = (direction: number) => {
         setActive((current) => (current + direction + slides.length) % slides.length);
     };
