@@ -55,8 +55,9 @@ export function useImageUpload() {
       const path = `businesses/${businessId}/${area}/${name}.jpg`;
       await uploadBytes(ref(storage, path), blob, { contentType: 'image/jpeg' });
       return { path };
-    } catch (err: any) {
-      setError(err.message || 'Could not upload the image');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Could not upload the image';
+      setError(message);
       return null;
     } finally {
       setUploading(false);

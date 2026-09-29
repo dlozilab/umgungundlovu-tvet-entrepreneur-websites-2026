@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
+import { Outlet, useLocation, Link } from 'react-router-dom';
 import type { AppDispatch } from '../../store';
 import AppBar from '../shared/AppBar';
 import Drawer from '../shared/Drawer';
@@ -26,7 +26,6 @@ const CMS_NAV: NavItem[] = [
 export default function CmsLayout() {
   useBrandTheme();
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const business = useSelector(selectBusiness);
@@ -34,8 +33,9 @@ export default function CmsLayout() {
 
   const activeId = location.pathname.split('/')[2] || 'dashboard';
 
-  function goTo(id: string) {
-    navigate(`/admin/${id}`);
+  // Link already navigates. This just closes the mobile drawer after a tap.
+  function handleSelect() {
+    dispatch(closeNav());
   }
 
   return (
@@ -53,7 +53,7 @@ export default function CmsLayout() {
       />
 
       <Drawer open={navOpen} onClose={() => dispatch(closeNav())} title="Admin menu">
-        <NavList items={CMS_NAV} activeId={activeId} onSelect={goTo} />
+        <NavList items={CMS_NAV} activeId={activeId} onSelect={handleSelect} />
         <button className={styles.signOut} onClick={() => dispatch(signOut())}>
           Sign out
         </button>
@@ -61,7 +61,7 @@ export default function CmsLayout() {
 
       <div className={styles.body}>
         <aside className={styles.sidebar}>
-          <NavList items={CMS_NAV} activeId={activeId} onSelect={goTo} />
+          <NavList items={CMS_NAV} activeId={activeId} onSelect={handleSelect} />
           <button className={styles.signOut} onClick={() => dispatch(signOut())}>
             Sign out
           </button>

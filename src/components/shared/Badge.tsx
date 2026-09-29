@@ -18,7 +18,3 @@ export default function Badge({ label, icon, flag }: BadgeProps) {
     </span>
   )
 }
-
-function FlagZASlot() {
-  return <FlagZA size={18}/>;
-}

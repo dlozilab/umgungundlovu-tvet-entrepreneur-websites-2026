@@ -1,5 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { doc, getDoc, setDoc, collection, getDocs, serverTimestamp } from 'firebase/firestore';
+import {
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  collection,
+  getDocs,
+  serverTimestamp,
+} from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import type { Business, GalleryRow, Area, GallerySlot, Service } from '../../types/site';
 import type { RootState } from '../index';
@@ -45,17 +53,19 @@ export const loadSite = createAsyncThunk(
       const media = mediaSnap.docs.map((d) => d.data() as GalleryRow);
 
       return { businessId, business, services, media };
-    } catch (err: any) {
-      return rejectWithValue(err.code || err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Could not load the site';
+      return rejectWithValue(message);
     }
   }
 );
 
+// Writes one area back, then appends a change log entry.
 export const saveArea = createAsyncThunk(
   'site/saveArea',
   async (
     { businessId, area, patch }: { businessId: string; area: Area; patch: Partial<Business> | Service[] },
-    { rejectWithValue }
+    { rejectWithValue, getState }
   ) => {
     try {
       if (area === 'services') {
@@ -74,9 +84,19 @@ export const saveArea = createAsyncThunk(
           { merge: true }
         );
       }
+
+      const uid = (getState() as RootState).auth.user?.uid ?? null;
+      await addDoc(collection(db, 'businesses', businessId, 'changeLog'), {
+        area,
+        fields: Array.isArray(patch) ? ['services'] : Object.keys(patch),
+        by: uid,
+        at: serverTimestamp(),
+      });
+
       return { area, patch };
-    } catch (err: any) {
-      return rejectWithValue(err.code || err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Could not save your changes';
+      return rejectWithValue(message);
     }
   }
 );
@@ -91,8 +111,9 @@ export const setMedia = createAsyncThunk(
       const row: GalleryRow = { slot, label: label ?? '', imagePath: image_path, alt: alt ?? '' };
       await setDoc(doc(db, 'businesses', businessId, 'media', String(slot)), row, { merge: true });
       return row;
-    } catch (err: any) {
-      return rejectWithValue(err.code || err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Could not update media';
+      return rejectWithValue(message);
     }
   }
 );
@@ -103,8 +124,9 @@ export const clearMedia = createAsyncThunk(
     try {
       await setDoc(doc(db, 'businesses', businessId, 'media', String(slot)), { imagePath: '' }, { merge: true });
       return slot;
-    } catch (err: any) {
-      return rejectWithValue(err.code || err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Could not clear media';
+      return rejectWithValue(message);
     }
   }
 );
@@ -115,7 +137,8 @@ const siteSlice = createSlice({
   reducers: {
     setField(state, action: { payload: { path: string; value: unknown } }) {
       if (!state.business) return;
-      (state.business as any)[action.payload.path] = action.payload.value;
+      const business = state.business as Record<string, unknown>;
+      business[action.payload.path] = action.payload.value;
       state.dirty = true;
     },
     setService(
@@ -126,9 +149,7 @@ const siteSlice = createSlice({
       if (row) row[action.payload.field] = action.payload.value;
       state.dirty = true;
     },
-    // Dev-only: bypasses Firestore entirely, drops fixed demo content
-    // straight into state so the UI renders with no project setup.
-    // Delete this once real seed data exists and main.tsx no longer calls it.
+    // Dev-only: bypasses Firestore so the UI renders with no project setup.
     hydrateDemo(
       state,
       action: { payload: { business: Business; services: Service[]; media: GalleryRow[] } }

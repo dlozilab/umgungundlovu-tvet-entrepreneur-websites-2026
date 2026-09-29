@@ -20,7 +20,8 @@ export default function AdminLoginPage() {
 
     useEffect(()=> {
         if (user) {
-            const from = (location.state as any)?.from?.pathname || '/admin';
+            const state = location.state as { from?: { pathname?: string } } | null;
+            const from = state?.from?.pathname || '/admin';
             navigate(from, {replace: true});
         }
     }, [user, navigate, location]);

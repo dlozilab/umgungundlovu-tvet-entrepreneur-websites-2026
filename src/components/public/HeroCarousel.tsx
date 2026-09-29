@@ -9,21 +9,18 @@ const ADVANCE_MS = 6000;
 export default function HeroCarousel() {
     const slides = useSelector(selectHeroImages);
     const [active, setActive] = useState(0);
-    const timerRef = useRef<number | undefined>(undefined)
+    const timerRef = useRef<number | undefined>(undefined);
 
+    useEffect(() => {
+        window.clearInterval(timerRef.current);
+        if (slides.length > 1) {
+            timerRef.current = window.setInterval(() => {
+                setActive((i) => (i + 1) % slides.length);
+            }, ADVANCE_MS);
+        }
 
-useEffect(()=> {
-    setActive(0);
-    window.clearInterval(timerRef.current);
-    if (slides.length >1 ) {
-        timerRef.current = window.setInterval(()=> {
-            setActive((i) => (i +1) % slides.length);
-        }, ADVANCE_MS)
-    }
-
-    return () => window.clearInterval(timerRef.current);
-
-}, [slides.length]);
+        return () => window.clearInterval(timerRef.current);
+    }, [slides.length]);
 
 if (slides.length === 0) {
     return <div className={styles.empty} aria-hidden="true"/>

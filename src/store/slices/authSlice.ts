@@ -45,8 +45,9 @@ export const signIn = createAsyncThunk(
             return {user: {uid: cred.user.uid, email: cred.user.email}, profile};
 
 
-        } catch (err:any){
-            return rejectWithValue(err.code || err.message)
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Could not sign you in';
+            return rejectWithValue(message)
         }
     }
 );
@@ -90,15 +91,18 @@ const authSlice = createSlice({
         .addCase(signIn.fulfilled, (state,action)=>{
             state.status = 'succeeded';
             state.user = action.payload.user;
-            state.profile= action.payload.profile
+            state.profile= action.payload.profile;
+            state.ready = true;
         })
         .addCase(signIn.rejected, (state, action)=>{
             state.status= 'failed';
+            state.ready = true;
             state.error = (action.payload as string) || 'cold not sign you in';
         })
         .addCase(signOut.fulfilled, (state)=>{
             state.user = null;
-            state.profile = null
+            state.profile = null;
+            state.ready = true;
         })
     
     }

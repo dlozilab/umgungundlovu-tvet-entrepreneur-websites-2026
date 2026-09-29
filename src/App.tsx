@@ -1,3 +1,4 @@
+// import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PublicLayout from './components/public/PublicLayout';
@@ -12,10 +13,14 @@ import MetaTags from './components/shared/MegaTags';
 // import Toast from './components/shared/Toast';
 import SectionHeading from './components/shared/SectionHeading';
 import Button from './components/shared/Button';
-import AdminLoginPage from './pages/AdminLoginPage';
+import LoginPage from './pages/AdminLoginPage';
 import CmsLayout from './components/cms/CmsLayout';
 import DashboardPage from './pages/admin/DashboardPage';
 import BusinessDetailsPage from './pages/admin/BusinessDetailsPage';
+import AboutPage from './pages/admin/AboutPage';
+import ContactPage from './pages/admin/ContactPage';
+import CompliancePage from './pages/admin/CompliancePage';
+import ComingSoonPage from './pages/admin/ComingSoonPage';
 import RequireAuth from './routes/RequireAuth';
 import { selectBusiness, selectSiteStatus, selectSiteError } from './store/slices/siteSlice';
 import { selectStrapline } from './store/selectors';
@@ -59,7 +64,7 @@ export default function App() {
     <>
       <Routes>
         <Route path="/" element={<PublicSite />} />
-        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route
           path="/admin"
           element={
@@ -71,7 +76,11 @@ export default function App() {
           <Route index element={<DashboardPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="details" element={<BusinessDetailsPage />} />
-          {/* branding, about, services, gallery, contact, compliance, help — next */}
+          <Route path="about" element={<AboutPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="compliance" element={<CompliancePage />} />
+          {/* branding, services, gallery, help: Sprint 4 */}
+          <Route path="*" element={<ComingSoonPage />} />
         </Route>
       </Routes>
       {/* <Toast /> */}

@@ -22,5 +22,6 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch;
 
 if (import.meta.env.DEV){
-    (window as any).__store = store
+    const devWindow = window as Window & { __store?: typeof store };
+    devWindow.__store = store;
 }
