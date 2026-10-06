@@ -14,7 +14,7 @@ export default function AboutSection() {
     return (
         <section className={`section ${styles.section}`} id="about">
             <div className="wrap">
-                <SectionHeading eyebrow="About" title="The person behind the wrok"/>
+                <SectionHeading eyebrow="About" title="The person behind the work"/>
                 <div className={styles.grid}>
                     {portrait ? (
                         <img className={styles.portrait} src={getPublicUrl(portrait.imagePath)} alt={portrait.alt || "Portrait of the owner"} />
