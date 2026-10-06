@@ -143,8 +143,7 @@ const siteSlice = createSlice({
     },
     setService(
       state,
-      action: { payload: { position: 1 | 2 | 3; field: 'name' | 'description'; value: string } }
-    ) {
+action: { payload: { position: 1 | 2 | 3; field: 'name' | 'description' | 'imagePath'; value: string } }    ) {
       const row = state.services.find((s) => s.position === action.payload.position);
       if (row) row[action.payload.field] = action.payload.value;
       state.dirty = true;

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { ref, uploadBytes } from 'firebase/storage';
-import { storage } from '../lib/firebase';
+import { uploadBlobToStorage } from '../utils/uploadBlob';
 
 interface UploadResult {
   path: string;
@@ -35,8 +34,6 @@ function resizeToBlob(file: File, maxDim: number): Promise<Blob> {
   });
 }
 
-// Storage path layout: businesses/{businessId}/{area}/{name}.jpg
-// e.g. businesses/demo/media/hero1.jpg, businesses/demo/branding/logo.jpg
 export function useImageUpload() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,17 +49,34 @@ export function useImageUpload() {
     setError(null);
     try {
       const blob = await resizeToBlob(file, maxDim);
-      const path = `businesses/${businessId}/${area}/${name}.jpg`;
-      await uploadBytes(ref(storage, path), blob, { contentType: 'image/jpeg' });
+      const path = await uploadBlobToStorage(blob, businessId, area, name);
       return { path };
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Could not upload the image';
-      setError(message);
+    } catch (err: any) {
+      setError(err.message || 'Could not upload the image');
       return null;
     } finally {
       setUploading(false);
     }
   }
 
-  return { upload, uploading, error };
+  async function uploadBlob(
+    blob: Blob,
+    businessId: string,
+    area: string,
+    name: string
+  ): Promise<UploadResult | null> {
+    setUploading(true);
+    setError(null);
+    try {
+      const path = await uploadBlobToStorage(blob, businessId, area, name);
+      return { path };
+    } catch (err: any) {
+      setError(err.message || 'Could not upload the image');
+      return null;
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return { upload, uploadBlob, uploading, error };
 }
