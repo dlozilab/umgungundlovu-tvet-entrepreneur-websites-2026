@@ -24,16 +24,20 @@ import ComingSoonPage from './pages/admin/ComingSoonPage';
 import RequireAuth from './routes/RequireAuth';
 import { selectBusiness, selectSiteStatus, selectSiteError } from './store/slices/siteSlice';
 import { selectStrapline } from './store/selectors';
+import BrandingPage from './pages/admin/BrandingPage';
+import ServicesPage from './pages/admin/ServicesPage';
+import GalleryPage from './pages/admin/GalleryPage';
+import HelpPage from './pages/admin/HelpPage';
 
 function PublicSite() {
   const business = useSelector(selectBusiness);
   const siteStatus = useSelector(selectSiteStatus);
   const siteError = useSelector(selectSiteError);
   const strapline = useSelector(selectStrapline);
-  const ServicesPage = lazy(() => import('./pages/admin/ServicesPage'));
-const GalleryPage = lazy(() => import('./pages/admin/GalleryPage'));
-const BrandingPage = lazy(() => import('./pages/admin/BrandingPage'));
-const HelpPage = lazy(() => import('./pages/admin/HelpPage'));
+//   const ServicesPage = lazy(() => import('./pages/admin/ServicesPage'));
+// const GalleryPage = lazy(() => import('./pages/admin/GalleryPage'));
+// const BrandingPage = lazy(() => import('./pages/admin/BrandingPage'));
+// const HelpPage = lazy(() => import('./pages/admin/HelpPage'));
 
   if (siteStatus === 'loading') return <p style={{ padding: 24 }}>Loading…</p>;
   if (siteStatus === 'failed' || !business) {
@@ -91,7 +95,7 @@ export default function App() {
           <Route path="contact" element={<ContactPage />} />
           <Route path="compliance" element={<CompliancePage />} />
           <Route path="branding" element={<BrandingPage />} />
-<Route path="services" element={<ServicesPage />} />
+          <Route path="services" element={<ServicesPage />} />
 <Route path="gallery" element={<GalleryPage />} />
 <Route path="help" element={<HelpPage />} />
           {/* branding, services, gallery, help: Sprint 4 */}

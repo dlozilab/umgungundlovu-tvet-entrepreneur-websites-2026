@@ -9,6 +9,7 @@ interface ImageSlotProps {
   onPick: (file: File) => void;
   onClear?: () => void;
   allowClear?: boolean;
+  children?: React.ReactNode; 
 }
 
 export default function ImageSlot({ label, note, value, onPick, onClear, allowClear }: ImageSlotProps) {

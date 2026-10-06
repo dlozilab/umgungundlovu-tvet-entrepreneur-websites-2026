@@ -21,6 +21,7 @@ export interface GalleryRow {
 
 export type Business = {
   id: string;
+  updated_at?: string;
   name: string;
   headline: string;
   description: string;

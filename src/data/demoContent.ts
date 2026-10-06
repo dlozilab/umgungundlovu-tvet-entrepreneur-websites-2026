@@ -4,7 +4,7 @@ export const demoBusiness: Business = {
   id: 'demo',
   name: 'Try Again Co and Partners',
   headline: 'Built to order, delivered to site.',
-  description: 'This is just to test the uI, firebase is not yet integrated on to this project/..',
+  description: 'Try us!!',
   brandColour: '#1f5c3d',
   logoPath: 'https://images.unsplash.com/photo-1789700537304-c291bfc38ad9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   
@@ -26,9 +26,9 @@ export const demoBusiness: Business = {
 };
 
 export const demoServices: Service[] = [
-  { position: 1, name: 'Welding', description: 'On-site and workshop welding for steel and mild steel.', imagePath: '' },
-  { position: 2, name: 'Aluminium', description: 'Windows, doors and custom aluminium fabrication.', imagePath: '' },
-  { position: 3, name: 'Boiler making', description: 'Tanks, frames and heavy structural work.', imagePath: '' },
+  { position: 1, name: 'Welding', description: 'On-site and workshop welding for steel and mild steel.', imagePath: 'https://plus.unsplash.com/premium_photo-1682147474777-90dc55cdbc67?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+  { position: 2, name: 'Aluminium', description: 'Windows, doors and custom aluminium fabrication.', imagePath: 'https://plus.unsplash.com/premium_photo-1664910255137-5462726ff06b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YWx1bWluaXVtJTIwd29ya3xlbnwwfHwwfHx8MA%3D%3D' },
+  { position: 3, name: 'Boiler making', description: 'Tanks, frames and heavy structural work.', imagePath: 'https://images.unsplash.com/photo-1562052579-b30d05e1ec93?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YWx1bWluaXVtJTIwd29ya3xlbnwwfHwwfHx8MA%3D%3D' },
 ];
 
 // zero rows (empty placeholder / section returns null), so this also

@@ -49,7 +49,7 @@ export default function SiteFooter() {
         //     </div>
         // </footer>
 
-        <Link className={styles.adminLink} to="/admin/login" aria-label="Site administration" title="Site administration">
+        <Link className={styles.adminLink} to="/admin/dashboard" aria-label="Site administration" title="Site administration">
   <Icon name="gear" />
 </Link>
     )

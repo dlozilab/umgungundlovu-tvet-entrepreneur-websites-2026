@@ -42,7 +42,14 @@ export const loadSite = createAsyncThunk(
       if (!businessSnap.exists()) {
         return rejectWithValue('No business found for this id');
       }
-      const business = { id: businessSnap.id, ...(businessSnap.data() as Omit<Business, 'id'>) };
+      const { updated_at, ...businessData } = businessSnap.data();
+      const business: Business = {
+        id: businessSnap.id,
+        ...businessData,
+        ...(updated_at && typeof updated_at.toDate === 'function'
+          ? { updated_at: updated_at.toDate().toISOString() }
+          : {}),
+      } as Business;
 
       const serviceSnap = await getDocs(collection(db, 'businesses', businessId, 'services'));
       const services = serviceSnap.docs
