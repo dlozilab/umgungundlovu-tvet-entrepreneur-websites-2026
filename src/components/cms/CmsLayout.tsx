@@ -38,6 +38,14 @@ export default function CmsLayout() {
     dispatch(closeNav());
   }
 
+  const signOutButton = (
+    <div className={styles.signOutWrap}>
+      <button className={styles.signOut} onClick={() => dispatch(signOut())}>
+        Sign out
+      </button>
+    </div>
+  );
+
   return (
     <div className={styles.shell}>
       <AppBar
@@ -54,17 +62,13 @@ export default function CmsLayout() {
 
       <Drawer open={navOpen} onClose={() => dispatch(closeNav())} title="Admin menu">
         <NavList items={CMS_NAV} activeId={activeId} onSelect={handleSelect} />
-        <button className={styles.signOut} onClick={() => dispatch(signOut())}>
-          Sign out
-        </button>
+        {signOutButton}
       </Drawer>
 
       <div className={styles.body}>
         <aside className={styles.sidebar}>
           <NavList items={CMS_NAV} activeId={activeId} onSelect={handleSelect} />
-          <button className={styles.signOut} onClick={() => dispatch(signOut())}>
-            Sign out
-          </button>
+          {signOutButton}
         </aside>
 
         <main className={styles.main}>
