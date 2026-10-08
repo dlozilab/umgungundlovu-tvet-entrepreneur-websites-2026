@@ -139,10 +139,21 @@
   color: var(--ink-soft);
 }
 
+@media (max-width: 767px) {
+  .backgrounds {
+    display: block;
+  }
+
+  .slide img {
+    filter: none;
+    transform: none;
+  }
+}
+
 @media (min-width: 768px) {
   .slides {
-    min-height: 460px;
-    height: clamp(460px, 62vh, 600px);
+    min-height: 650px;
+    height: clamp(650px, 62vh, 780px);
     background: transparent;
     aspect-ratio: auto;
   }
