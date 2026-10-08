@@ -95,7 +95,7 @@ p.lead {
     color: var(--ink);
 }
 
-@media (min-widht: 768px) {
+@media (min-width: 768px) {
     h1 {font-size: 36px;}
     h2 {font-size: 26px;}
     .section {padding: 64px 0;}
