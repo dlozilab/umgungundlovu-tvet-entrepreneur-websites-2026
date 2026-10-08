@@ -17,6 +17,8 @@ export interface GalleryRow {
   label: string;
   imagePath: string;
   alt: string;
+  caption?: string;
+  subcaption?: string;
 }
 
 export type Business = {

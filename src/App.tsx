@@ -1,4 +1,3 @@
-// import React from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -11,8 +10,6 @@ import ContactSection from './components/public/ContactSection';
 import SiteFooter from './components/public/SiteFooter';
 import WhatsAppFab from './components/public/WhatsappFab';
 import MetaTags from './components/shared/MegaTags';
-// import Toast from './components/shared/Toast';
-import Button from './components/shared/Button';
 import LoginPage from './pages/AdminLoginPage';
 import CmsLayout from './components/cms/CmsLayout';
 import DashboardPage from './pages/admin/DashboardPage';
@@ -23,7 +20,6 @@ import CompliancePage from './pages/admin/CompliancePage';
 import ComingSoonPage from './pages/admin/ComingSoonPage';
 import RequireAuth from './routes/RequireAuth';
 import { selectBusiness, selectSiteStatus, selectSiteError } from './store/slices/siteSlice';
-import { selectStrapline } from './store/selectors';
 import BrandingPage from './pages/admin/BrandingPage';
 import ServicesPage from './pages/admin/ServicesPage';
 import GalleryPage from './pages/admin/GalleryPage';
@@ -33,7 +29,6 @@ function PublicSite() {
   const business = useSelector(selectBusiness);
   const siteStatus = useSelector(selectSiteStatus);
   const siteError = useSelector(selectSiteError);
-  const strapline = useSelector(selectStrapline);
 //   const ServicesPage = lazy(() => import('./pages/admin/ServicesPage'));
 // const GalleryPage = lazy(() => import('./pages/admin/GalleryPage'));
 // const BrandingPage = lazy(() => import('./pages/admin/BrandingPage'));
@@ -48,21 +43,7 @@ function PublicSite() {
     <>
       <MetaTags />
       <PublicLayout>
-        <div className="hero">
-          <div className="hero-wrap">
-            <div className="hero-grid">
-              <div className="hero-copy">
-                <p className="eyebrow hero-kicker">{strapline || 'Built to last'}</p>
-                <h1 className="hero-title">{business.headline}</h1>
-                <p className="lead hero-lead">{business.description}</p>
-                <div className="hero-cta">
-                  <Button variant="solid">Get a quote</Button>
-                </div>
-              </div>
-              <HeroCarousel />
-            </div>
-          </div>
-        </div>
+        <HeroCarousel />
         <AboutSection />
         <ServicesSection />
         <GallerySection />
