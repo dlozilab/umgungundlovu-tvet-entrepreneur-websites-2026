@@ -1,76 +1,164 @@
-# React + TypeScript + Vite
+# Umgungundlovu TVET Entrepreneur Websites
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A mobile-first website and content-management system for small businesses. Public business content is loaded from Firebase, and owners can manage their site through a protected admin area.
 
-Currently, two official plugins are available:
+## Live demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://umgungundlovu-tvet-entrepreneur-web-rho.vercel.app/
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Public business pages with a hero carousel, about, services, gallery, and contact sections.
+- Admin sign-in and protected pages for business details, branding, about, services, gallery, contact, and compliance.
+- Firestore-backed business content and Firebase Storage image uploads.
+- Click-to-contact links for phone, email, WhatsApp, and maps.
+- Responsive layouts built mobile-first.
 
-## Expanding the ESLint configuration
+## Tech stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Area | Technology |
+| --- | --- |
+| UI | React 19, TypeScript |
+| Build tooling | Vite |
+| State management | Redux Toolkit |
+| Routing | React Router |
+| Backend services | Firebase Authentication, Cloud Firestore, and Cloud Storage |
+| Styling | CSS Modules and shared CSS variables |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Clone and install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```sh
+git clone https://github.com/dlozilab/umgungundlovu-tvet-entrepreneur-websites-2026.git
+cd umgungundlovu-tvet-entrepreneur-websites-2026
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Configure Firebase
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Create a Firebase project and register a web app.
+2. Create a Cloud Firestore database.
+3. Enable Email/Password in Firebase Authentication.
+4. Create a Firebase Storage bucket.
+5. Copy `.env.local.example` to `.env.local`, then fill in the Firebase web app configuration and business ID:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```dotenv
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_BUSINESS_ID=
 ```
-# umgungundlovu-tvet-entrepreneur-websites-2026
+
+### Seed Firestore
+
+Set `VITE_BUSINESS_ID` to the business document ID and create `businesses/{id}` with the business fields used by the site:
+
+```json
+{
+  "name": "Example Business",
+  "headline": "A short business headline",
+  "description": "A short introduction to the business.",
+  "brandColour": "#1f5c3d",
+  "logoPath": "",
+  "sharePath": "",
+  "aboutStory": "The business story.",
+  "phone": "",
+  "whatsapp": "",
+  "email": "",
+  "address": "",
+  "hours": "",
+  "delivers": false,
+  "walkins": false,
+  "registeredName": "",
+  "cipcNumber": "",
+  "established": "",
+  "bbeeLevel": "",
+  "proudlySa": false,
+  "published": true
+}
+```
+
+Create three documents in `businesses/{id}/services`, with document IDs `1`, `2`, and `3`. Each document has `position` (`1`, `2`, or `3`), `name`, `description`, and `imagePath`.
+
+Create these nine documents in `businesses/{id}/media`, using each slot name as both the document ID and the `slot` value: `hero1`, `hero2`, `portrait`, `galleryPremises1`, `galleryPremises2`, `galleryWork1`, `galleryWork2`, `galleryDelivery1`, and `galleryDelivery2`. Each document uses `slot`, `label`, `imagePath`, and `alt`; hero documents may also include `caption` and `subcaption`. Set `imagePath` to the Firebase Storage object path, or to a publicly accessible URL.
+
+Create one Email/Password user in Firebase Authentication. Then create `profiles/{uid}` in Firestore with:
+
+```json
+{
+  "businessId": "your-business-id",
+  "displayName": "Business owner",
+  "role": "owner"
+}
+```
+
+Publish Firestore and Storage security rules for your project in the Firebase console.
+
+### Run locally
+
+```sh
+npm run dev
+```
+
+## Deployment on Vercel
+
+Import the repository into Vercel and add all seven environment variables separately in the project's Vercel settings. Environment variables in `.env.local` are not uploaded automatically.
+
+The root `vercel.json` contains the SPA rewrite that routes client-side paths to `/index.html`. Keep it in the deployed project so routes such as `/admin` and `/login` work on direct navigation.
+
+## Project structure
+
+```text
+.
+├── public/
+│   ├── flag-za.svg
+│   ├── robots.txt
+│   └── site-prototype (3).html
+├── src/
+│   ├── admin/
+│   ├── components/
+│   │   ├── cms/
+│   │   ├── public/
+│   │   └── shared/
+│   ├── features/
+│   ├── hooks/
+│   ├── lib/
+│   ├── pages/
+│   │   ├── admin/
+│   │   ├── AdminLoginPage.module.css
+│   │   └── AdminLoginPage.tsx
+│   ├── routes/
+│   ├── site/
+│   ├── store/
+│   │   └── slices/
+│   ├── styles/
+│   ├── types/
+│   ├── utils/
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── store.ts
+├── .env.local.example
+├── .gitignore
+├── eslint.config.js
+├── flag-za.svg
+├── index.html
+├── package-lock.json
+├── package.json
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+├── vercel.json
+└── vite.config.ts
+```
+
+## Contributing
+
+Fork the repository, create a focused branch, and open a pull request with a clear summary of the change. For feature or behavior changes, include the verification steps you ran.
+
+## Credits
+
+Built by Sinenhlanhla, developer of the whole solution: https://github.com/SineMag
