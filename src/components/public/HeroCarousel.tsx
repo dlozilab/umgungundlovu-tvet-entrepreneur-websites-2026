@@ -44,61 +44,80 @@ export default function HeroCarousel() {
 
   return (
     <section className={styles.slides} aria-roledescription="carousel">
-      {slides.map((slide, index) => (
-        <div
-          key={slide.slot}
-          className={`${styles.slide} ${index === active ? styles.on : ""}`}
-          aria-hidden={index !== active}
-        >
-          <img
-            src={getPublicUrl(slide.imagePath)}
-            alt={slide.alt || ""}
-          />
-        </div>
-      ))}
+      <div className={styles.backgrounds} aria-hidden="true">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.slot}
+            className={`${styles.slide} ${index === active ? styles.on : ""}`}
+            aria-hidden={index !== active}
+          >
+            <img
+              src={getPublicUrl(slide.imagePath)}
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
+        ))}
+      </div>
 
       <div className={styles.scrim} aria-hidden="true" />
 
       <div className={styles.overlay}>
-        <div className={styles.captions}>
-          {slides.map((slide, index) => (
-            <div
-              key={slide.slot}
-              className={`${styles.caption} ${index === active ? styles.on : ""}`}
-            >
-              {index === active ? (
-                <h1 className={styles.headline}>
-                  {slide.caption || business.headline}
-                </h1>
-              ) : (
-                <p className={styles.headline} aria-hidden="true">
-                  {slide.caption || business.headline}
-                </p>
-              )}
-              <p className={styles.sub} aria-hidden={index !== active}>
-                {slide.subcaption || business.description}
-              </p>
+        <div className={styles.content}>
+          <div className={styles.textBlock}>
+            <div className={styles.captions}>
+              {slides.map((slide, index) => (
+                <div
+                  key={slide.slot}
+                  className={`${styles.caption} ${index === active ? styles.on : ""}`}
+                >
+                  {index === active ? (
+                    <h1 className={styles.headline}>
+                      {slide.caption || business.headline}
+                    </h1>
+                  ) : (
+                    <p className={styles.headline} aria-hidden="true">
+                      {slide.caption || business.headline}
+                    </p>
+                  )}
+                  <p className={styles.sub} aria-hidden={index !== active}>
+                    {slide.subcaption || business.description}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <Button variant="solid" onClick={scrollToContact}>
-          Get a quote
-        </Button>
+            <Button variant="solid" onClick={scrollToContact}>
+              Get a quote
+            </Button>
 
-        {slides.length > 1 && (
-          <div className={styles.dots} aria-label="Choose a hero slide">
+            {slides.length > 1 && (
+              <div className={styles.dots} aria-label="Choose a hero slide">
+                {slides.map((slide, index) => (
+                  <button
+                    key={slide.slot}
+                    type="button"
+                    aria-label={`Go to slide ${index + 1}`}
+                    aria-current={index === active}
+                    onClick={() => setActive(index)}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className={styles.photoColumn}>
             {slides.map((slide, index) => (
-              <button
-                key={slide.slot}
-                type="button"
-                aria-label={`Go to slide ${index + 1}`}
-                aria-current={index === active}
-                onClick={() => setActive(index)}
+              <img
+                key={`${slide.slot}-photo`}
+                className={`${styles.photo} ${index === active ? styles.on : ""}`}
+                src={getPublicUrl(slide.imagePath)}
+                alt={slide.alt || ""}
+                aria-hidden={index !== active}
               />
             ))}
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
