@@ -150,22 +150,17 @@ const siteSlice = createSlice({
     },
     setService(
       state,
-action: { payload: { position: 1 | 2 | 3; field: 'name' | 'description' | 'imagePath'; value: string } }    ) {
+      action: {
+        payload: {
+          position: 1 | 2 | 3;
+          field: 'name' | 'description' | 'imagePath';
+          value: string;
+        };
+      }
+    ) {
       const row = state.services.find((s) => s.position === action.payload.position);
       if (row) row[action.payload.field] = action.payload.value;
       state.dirty = true;
-    },
-    // Dev-only: bypasses Firestore so the UI renders with no project setup.
-    hydrateDemo(
-      state,
-      action: { payload: { business: Business; services: Service[]; media: GalleryRow[] } }
-    ) {
-      state.businessId = 'demo';
-      state.business = action.payload.business;
-      state.services = action.payload.services;
-      state.media = action.payload.media;
-      state.status = 'succeeded';
-      state.dirty = false;
     },
   },
   extraReducers: (builder) => {
@@ -209,7 +204,7 @@ action: { payload: { position: 1 | 2 | 3; field: 'name' | 'description' | 'image
   },
 });
 
-export const { setField, setService, hydrateDemo } = siteSlice.actions;
+export const { setField, setService } = siteSlice.actions;
 export default siteSlice.reducer;
 
 export const selectBusiness = (state: RootState) => state.site.business;

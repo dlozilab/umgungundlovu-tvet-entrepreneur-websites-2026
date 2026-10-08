@@ -1,4 +1,3 @@
-import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PublicLayout from './components/public/PublicLayout';
@@ -29,10 +28,6 @@ function PublicSite() {
   const business = useSelector(selectBusiness);
   const siteStatus = useSelector(selectSiteStatus);
   const siteError = useSelector(selectSiteError);
-//   const ServicesPage = lazy(() => import('./pages/admin/ServicesPage'));
-// const GalleryPage = lazy(() => import('./pages/admin/GalleryPage'));
-// const BrandingPage = lazy(() => import('./pages/admin/BrandingPage'));
-// const HelpPage = lazy(() => import('./pages/admin/HelpPage'));
 
   if (siteStatus === 'loading') return <p style={{ padding: 24 }}>Loading…</p>;
   if (siteStatus === 'failed' || !business) {
@@ -77,13 +72,11 @@ export default function App() {
           <Route path="compliance" element={<CompliancePage />} />
           <Route path="branding" element={<BrandingPage />} />
           <Route path="services" element={<ServicesPage />} />
-<Route path="gallery" element={<GalleryPage />} />
-<Route path="help" element={<HelpPage />} />
-          {/* branding, services, gallery, help: Sprint 4 */}
+          <Route path="gallery" element={<GalleryPage />} />
+          <Route path="help" element={<HelpPage />} />
           <Route path="*" element={<ComingSoonPage />} />
         </Route>
       </Routes>
-      {/* <Toast /> */}
     </>
   );
 }
