@@ -4,6 +4,27 @@
   aspect-ratio: 1 / 1;
   background: var(--brand-wash);
 }
+.backdrop {
+  display: none;
+}
+
+.inner {position: relative;}
+
+.media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 5/4;
+
+}
+
+
+.fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13, 16, 21, 0) 40%, var(--hero-bg) 100%);
+  pointer-events: none;
+}
+
 
 .backgrounds {
   position: absolute;

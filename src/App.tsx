@@ -23,13 +23,14 @@ import BrandingPage from './pages/admin/BrandingPage';
 import ServicesPage from './pages/admin/ServicesPage';
 import GalleryPage from './pages/admin/GalleryPage';
 import HelpPage from './pages/admin/HelpPage';
+import Loader from './components/shared/Loader';
 
 function PublicSite() {
   const business = useSelector(selectBusiness);
   const siteStatus = useSelector(selectSiteStatus);
   const siteError = useSelector(selectSiteError);
 
-  if (siteStatus === 'loading') return <p style={{ padding: 24 }}>Loading…</p>;
+  if (siteStatus === 'loading') return <Loader fullPage label='Loading Site...'/>;
   if (siteStatus === 'failed' || !business) {
     return <p style={{ padding: 24 }}>Could not load the site: {siteError}</p>;
   }

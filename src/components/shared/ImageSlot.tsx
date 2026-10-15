@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Button from './Button';
+import Loader from './Loader';
 import styles from './ImageSlot.module.css';
 
 interface ImageSlotProps {
@@ -9,11 +10,14 @@ interface ImageSlotProps {
   onPick: (file: File) => void;
   onClear?: () => void;
   allowClear?: boolean;
+  busy?: boolean;
   children?: React.ReactNode; 
 }
 
-export default function ImageSlot({ label, note, value, onPick, onClear, allowClear }: ImageSlotProps) {
+export default function ImageSlot({ label, note, busy=false, value, onPick, onClear, allowClear }: ImageSlotProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [loadedSrc, setLoaderSrc] = useState('');
+  const waiting = busy || (value !== '' && loadedSrc !== value)
 
   return (
     <div className={`${styles.slot} ${!value ? styles.empty : ''}`}>
@@ -21,6 +25,12 @@ export default function ImageSlot({ label, note, value, onPick, onClear, allowCl
         <img className={styles.thumb} src={value} alt={label} />
       ) : (
         <div className={styles.placeholder}>Empty</div>
+      )}
+
+      {waiting && (
+        <div className={styles.overlay}>
+          <Loader size={28} label={busy ? 'uploading ' : 'loading your image'} />
+        </div>
       )}
 
       <div className={styles.body}>

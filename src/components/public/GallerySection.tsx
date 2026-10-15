@@ -3,9 +3,12 @@ import GalleryTile from "./GalleryTile";
 import { selectGallery } from "../../store/selectors";
 import styles from './GallerySection.module.css'
 import { useSelector } from "react-redux";
+import { useState } from "react";
+import type { GallerySlot } from "../../types/site";
 
 export default function GallerySection(){
     const rows = useSelector(selectGallery)
+    const [busySlot, setBusySlot] = useState<GallerySlot | null> (null);
 
     if (rows.length === 0) return null;
     return (

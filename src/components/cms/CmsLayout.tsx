@@ -51,7 +51,7 @@ export default function CmsLayout() {
       <AppBar
         logo={business?.logoPath ? getPublicUrl(business.logoPath) : undefined}
         title={business?.name || 'Site manager'}
-        subtitle="Site manager"
+        // subtitle="Site manager"
         onMenu={() => dispatch(openNav())}
         action={
           <Link to="/" className={styles.viewSite}>

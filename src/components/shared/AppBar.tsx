@@ -11,14 +11,14 @@ interface NavLinkItem {
 interface AppBarProps {
   logo?:string;
   title: string;
-  subtitle?: string;
+  // subtitle?: string;
   action?: React.ReactNode;
   onMenu?: ()=> void;
   navItems?: NavLinkItem[];
 }
 
 
-export default function AppBar({ logo, title, subtitle, action, onMenu, navItems}: AppBarProps){
+export default function AppBar({ logo, title, action, onMenu, navItems}: AppBarProps){
   return (
     <header className={styles.bar}>
       <div className={styles.brand}> 
@@ -29,7 +29,7 @@ export default function AppBar({ logo, title, subtitle, action, onMenu, navItems
         )}
         <span className={styles.names}>
           <span className={styles.title}>{title}</span>
-          {subtitle && <span className={styles.subtitle}> {subtitle}</span>}
+          {/* {subtitle && <span className={styles.subtitle}> {subtitle}</span>} */}
 
         </span>
       </div>

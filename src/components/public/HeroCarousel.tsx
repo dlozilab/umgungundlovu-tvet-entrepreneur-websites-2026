@@ -6,7 +6,25 @@ import { selectHeroImages } from "../../store/selectors";
 import { getPublicUrl } from "../../utils/storage";
 import styles from "./HeroCarousel.module.css";
 
+
 const ADVANCE_MS = 6000;
+function scrollToSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth'})
+}
+
+// helper function
+function HeroActions() {
+  return (
+    <div className={styles.actions}>
+      <button type="button" className={styles.btnPrimary} onClick={()=> scrollToSection('contact')}>
+      Get A Quote
+      </button>
+      <button type="button" className={styles.btnSecondary} onClick={() => scrollToSection('services')}>
+        Our Services
+      </button>
+    </div>
+  )
+}
 
 export default function HeroCarousel() {
   const business = useSelector(selectBusiness);
@@ -23,6 +41,21 @@ export default function HeroCarousel() {
 
     return () => window.clearInterval(timer);
   }, [slides.length]);
+
+  // for the linear gradient image in hero section to blenfd on to the nav section as well|
+  if (slides.length === 0 ){
+    return (
+      <section className={styles.hero}>
+        <div className={styles.inner}>
+          <div className={`${styles.copy} ${styles.copyOnly}`}>
+            <h1 className={styles.headline}>{business?.headline}</h1>
+            {business?.description && <p className={styles.sub}>{business.description}</p>}
+            <HeroActions/>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   if (!business) return null;
 
@@ -87,9 +120,9 @@ export default function HeroCarousel() {
               ))}
             </div>
 
-            <Button variant="solid" onClick={scrollToContact}>
+            {/* <Button variant="solid" onClick={scrollToContact}>
               Get a quote
-            </Button>
+            </Button> */}
 
             {slides.length > 1 && (
               <div className={styles.dots} aria-label="Choose a hero slide">

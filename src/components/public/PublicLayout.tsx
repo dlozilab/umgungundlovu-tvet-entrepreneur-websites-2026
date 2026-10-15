@@ -31,7 +31,7 @@ export default function PublicLayout({children}: PublicLayoutProps){
     useBrandTheme();
     const dispatch = useDispatch();
     const business =useSelector(selectBusiness);
-    const strapline= useSelector(selectStrapline)
+    // const strapline= useSelector(selectStrapline)
     const navOpen = useSelector(selectNavOpen)
 
     if (!business) return null;
@@ -41,7 +41,7 @@ export default function PublicLayout({children}: PublicLayoutProps){
             <AppBar
                 logo={business.logoPath ? getPublicUrl(business.logoPath) : undefined}
                 title={business.name}
-                subtitle={strapline || undefined}
+                // subtitle={strapline || undefined}
                 onMenu={() => dispatch(openNav())}
                 navItems={NAV_ITEMS}
             />
