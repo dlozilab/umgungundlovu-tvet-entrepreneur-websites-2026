@@ -30,9 +30,9 @@ export default function HeroCarousel() {
   const business = useSelector(selectBusiness);
   const slides = useSelector(selectHeroImages);
   const [active, setActive] = useState(0);
+  const safeActive = slides.length === 0 ? 0 : Math.min(active, slides.length - 1);
 
   useEffect(() => {
-    setActive(0);
     if (slides.length <= 1) return;
 
     const timer = window.setInterval(() => {
@@ -81,8 +81,8 @@ export default function HeroCarousel() {
         {slides.map((slide, index) => (
           <div
             key={slide.slot}
-            className={`${styles.slide} ${index === active ? styles.on : ""}`}
-            aria-hidden={index !== active}
+            className={`${styles.slide} ${index === safeActive ? styles.on : ""}`}
+            aria-hidden={index !== safeActive}
           >
             <img
               src={getPublicUrl(slide.imagePath)}
@@ -102,9 +102,9 @@ export default function HeroCarousel() {
               {slides.map((slide, index) => (
                 <div
                   key={slide.slot}
-                  className={`${styles.caption} ${index === active ? styles.on : ""}`}
+                className={`${styles.caption} ${index === safeActive ? styles.on : ""}`}
                 >
-                  {index === active ? (
+                {index === safeActive ? (
                     <h1 className={styles.headline}>
                       {slide.caption || business.headline}
                     </h1>
@@ -113,7 +113,7 @@ export default function HeroCarousel() {
                       {slide.caption || business.headline}
                     </p>
                   )}
-                  <p className={styles.sub} aria-hidden={index !== active}>
+                <p className={styles.sub} aria-hidden={index !== safeActive}>
                     {slide.subcaption || business.description}
                   </p>
                 </div>
@@ -131,7 +131,7 @@ export default function HeroCarousel() {
                     key={slide.slot}
                     type="button"
                     aria-label={`Go to slide ${index + 1}`}
-                    aria-current={index === active}
+                    aria-current={index === safeActive}
                     onClick={() => setActive(index)}
                   />
                 ))}
@@ -143,10 +143,10 @@ export default function HeroCarousel() {
             {slides.map((slide, index) => (
               <img
                 key={`${slide.slot}-photo`}
-                className={`${styles.photo} ${index === active ? styles.on : ""}`}
+                className={`${styles.photo} ${index === safeActive ? styles.on : ""}`}
                 src={getPublicUrl(slide.imagePath)}
                 alt={slide.alt || ""}
-                aria-hidden={index !== active}
+                aria-hidden={index !== safeActive}
               />
             ))}
           </div>

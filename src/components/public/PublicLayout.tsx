@@ -5,7 +5,6 @@ import Drawer from "../shared/Drawer";
 import NavList from "../shared/NavList";
 import { useBrandTheme } from "../../hooks/useBrandTheme";
 import { selectBusiness } from "../../store/slices/siteSlice";
-import { selectStrapline } from "../../store/selectors";
 import { getPublicUrl } from "../../utils/storage";
 import { selectNavOpen, openNav, closeNav} from "../../store/slices/uiSlice";
 import styles from './PublicLayout.module.css'
@@ -31,7 +30,6 @@ export default function PublicLayout({children}: PublicLayoutProps){
     useBrandTheme();
     const dispatch = useDispatch();
     const business =useSelector(selectBusiness);
-    // const strapline= useSelector(selectStrapline)
     const navOpen = useSelector(selectNavOpen)
 
     if (!business) return null;

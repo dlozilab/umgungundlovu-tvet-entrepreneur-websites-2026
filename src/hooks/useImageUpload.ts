@@ -5,6 +5,12 @@ interface UploadResult {
   path: string;
 }
 
+function errorMessage(error: unknown): string {
+  return error instanceof Error && error.message
+    ? error.message
+    : 'Could not upload the image';
+}
+
 function resizeToBlob(file: File, maxDim: number): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -35,7 +41,6 @@ function resizeToBlob(file: File, maxDim: number): Promise<Blob> {
 }
 
 export function useImageUpload() {
-  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function upload(
@@ -45,17 +50,14 @@ export function useImageUpload() {
     name: string,
     maxDim = 1600
   ): Promise<UploadResult | null> {
-    setUploading(true);
     setError(null);
     try {
       const blob = await resizeToBlob(file, maxDim);
       const path = await uploadBlobToStorage(blob, businessId, area, name);
       return { path };
-    } catch (err: any) {
-      setError(err.message || 'Could not upload the image');
+    } catch (err: unknown) {
+      setError(errorMessage(err));
       return null;
-    } finally {
-      setUploading(false);
     }
   }
 
@@ -65,18 +67,15 @@ export function useImageUpload() {
     area: string,
     name: string
   ): Promise<UploadResult | null> {
-    setUploading(true);
     setError(null);
     try {
       const path = await uploadBlobToStorage(blob, businessId, area, name);
       return { path };
-    } catch (err: any) {
-      setError(err.message || 'Could not upload the image');
+    } catch (err: unknown) {
+      setError(errorMessage(err));
       return null;
-    } finally {
-      setUploading(false);
     }
   }
 
-  return { upload, uploadBlob, uploading, error };
+  return { upload, uploadBlob, error };
 }

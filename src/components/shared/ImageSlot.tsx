@@ -11,27 +11,51 @@ interface ImageSlotProps {
   onClear?: () => void;
   allowClear?: boolean;
   busy?: boolean;
+  busyLabel?: string;
   children?: React.ReactNode; 
 }
 
-export default function ImageSlot({ label, note, busy=false, value, onPick, onClear, allowClear }: ImageSlotProps) {
+export default function ImageSlot({
+  label,
+  note,
+  busy = false,
+  value,
+  onPick,
+  onClear,
+  allowClear,
+  busyLabel = 'Uploading image',
+  children,
+}: ImageSlotProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const [loadedSrc, setLoaderSrc] = useState('');
-  const waiting = busy || (value !== '' && loadedSrc !== value)
+  const [loadedSrc, setLoadedSrc] = useState('');
+  const [unavailableSrc, setUnavailableSrc] = useState('');
+  const showImage = value !== '' && unavailableSrc !== value;
+  const waiting = busy || (showImage && loadedSrc !== value);
 
   return (
     <div className={`${styles.slot} ${!value ? styles.empty : ''}`}>
-      {value ? (
-        <img className={styles.thumb} src={value} alt={label} />
-      ) : (
-        <div className={styles.placeholder}>Empty</div>
-      )}
+      <div className={styles.thumbWrap}>
+        {showImage ? (
+          <img
+            className={styles.thumb}
+            src={value}
+            alt={label}
+            onLoad={() => setLoadedSrc(value)}
+            onError={() => {
+              setUnavailableSrc(value);
+              setLoadedSrc(value);
+            }}
+          />
+        ) : (
+          <div className={styles.placeholder}>{value ? 'Preview unavailable' : 'Empty'}</div>
+        )}
 
-      {waiting && (
-        <div className={styles.overlay}>
-          <Loader size={28} label={busy ? 'uploading ' : 'loading your image'} />
-        </div>
-      )}
+        {waiting && (
+          <div className={styles.overlay}>
+            <Loader size={24} label={busy ? busyLabel : 'Loading image'} />
+          </div>
+        )}
+      </div>
 
       <div className={styles.body}>
         <div className={styles.label}>{label}</div>
@@ -39,15 +63,17 @@ export default function ImageSlot({ label, note, busy=false, value, onPick, onCl
         <div className={styles.actions}>
           <Button
             size="sm"
+            disabled={busy}
             onClick={() => inputRef.current?.click()}
           >
             Replace
           </Button>
           {allowClear && value && onClear && (
-            <Button size="sm" variant="quiet" onClick={onClear}>
+            <Button size="sm" variant="quiet" disabled={busy} onClick={onClear}>
               Remove
             </Button>
           )}
+          {children}
         </div>
       </div>
 

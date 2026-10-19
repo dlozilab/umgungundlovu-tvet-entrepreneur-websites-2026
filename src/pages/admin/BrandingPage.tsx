@@ -25,13 +25,16 @@ export default function BrandingPage() {
   const dirty = useSelector(selectSiteDirty);
   const tones = useSelector(selectTones);
   const hero = useSelector(selectHeroImages);
-  const { upload, uploadBlob, uploading } = useImageUpload();
+  const { upload, uploadBlob } = useImageUpload();
   const [saving, setSaving] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const [busy, setBusy] = useState<'logo' | 'share' | null>(null);
 
   if (!business || !businessId) return null;
 
-  async function handleLogoPick(file: File) {
+ async function handleLogoPick(file: File) {
+  setBusy('logo');
+  try {
     const result = await upload(file, businessId!, 'branding', `logo-${Date.now()}`, 600);
     if (!result) {
       dispatch(flashToast('Could not upload the logo'));
@@ -40,9 +43,14 @@ export default function BrandingPage() {
     dispatch(setField({ path: 'logoPath', value: result.path }));
     const saved = await dispatch(saveArea({ businessId: businessId!, area: 'branding', patch: { logoPath: result.path } }));
     dispatch(flashToast(saveArea.fulfilled.match(saved) ? 'Logo updated' : 'Could not save the logo'));
+  } finally {
+    setBusy(null);
   }
+}
 
-  async function handleSharePick(file: File) {
+async function handleSharePick(file: File) {
+  setBusy('share');
+  try {
     const result = await upload(file, businessId!, 'branding', `share-${Date.now()}`, 1200);
     if (!result) {
       dispatch(flashToast('Could not upload the share picture'));
@@ -51,20 +59,23 @@ export default function BrandingPage() {
     dispatch(setField({ path: 'sharePath', value: result.path }));
     const saved = await dispatch(saveArea({ businessId: businessId!, area: 'branding', patch: { sharePath: result.path } }));
     dispatch(flashToast(saveArea.fulfilled.match(saved) ? 'Share picture updated' : 'Could not save the share picture'));
+  } finally {
+    setBusy(null);
   }
+}
 
-  async function handleGenerateShare() {
-    setGenerating(true);
+async function handleGenerateShare() {
+  setGenerating(true);
+  setBusy('share');
+  try {
     const heroUrl = hero[0] ? getPublicUrl(hero[0].imagePath) : '';
     const logoUrl = business!.logoPath ? getPublicUrl(business!.logoPath) : '';
     const blob = await generateShareImage(heroUrl, logoUrl, business!.brandColour);
     if (!blob) {
-      setGenerating(false);
-      dispatch(flashToast('Could not build the picture from these images — try uploading one instead.'));
+      dispatch(flashToast('Could not build the picture from these images. Try uploading one instead.'));
       return;
     }
     const result = await uploadBlob(blob, businessId!, 'branding', `share-${Date.now()}`);
-    setGenerating(false);
     if (!result) {
       dispatch(flashToast('Could not save the generated picture'));
       return;
@@ -72,7 +83,11 @@ export default function BrandingPage() {
     dispatch(setField({ path: 'sharePath', value: result.path }));
     const saved = await dispatch(saveArea({ businessId: businessId!, area: 'branding', patch: { sharePath: result.path } }));
     dispatch(flashToast(saveArea.fulfilled.match(saved) ? 'Share picture made' : 'Could not save the share picture'));
+  } finally {
+    setGenerating(false);
+    setBusy(null);
   }
+}
 
   async function handleSaveColour() {
     setSaving(true);
@@ -92,6 +107,7 @@ export default function BrandingPage() {
         label="Logo"
         note="Used in the menu bar, the footer, and as the small icon in the browser tab."
         value={business.logoPath ? getPublicUrl(business.logoPath) : ''}
+        busy={busy === 'logo'}
         onPick={handleLogoPick}
       />
 
@@ -121,6 +137,8 @@ export default function BrandingPage() {
         label="Share picture"
         note="Shows when your link is sent on WhatsApp or Facebook. Make one from your logo and hero photo, or upload your own."
         value={business.sharePath ? getPublicUrl(business.sharePath) : ''}
+        busy={busy === 'share'}
+        busyLabel={generating ? 'Making picture' : 'Uploading image'}
         onPick={handleSharePick}
       >
         <Button size="sm" onClick={handleGenerateShare} disabled={generating}>
@@ -133,8 +151,6 @@ export default function BrandingPage() {
         title={business.name}
         description={business.description}
       />
-
-      {uploading && <p style={{ fontSize: 13, marginTop: 8 }}>Uploading…</p>}
 
       <SaveBar onSave={handleSaveColour} saving={saving} dirty={dirty} />
     </section>

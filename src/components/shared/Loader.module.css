@@ -1,44 +1,55 @@
 .loader {
     display: inline-flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
     color: var(--brand, #2b2b2b);
 }
 
 .fullPage {
     min-height: 100vh;
-    /* dvh = dynamic viewport height.. represents 1% of the of viewport height */
-    min-height: 100dvh ;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--bg);
 }
 
-.dot1, .dot2, .dot3 {
-    transform-box:fill-box ;
-    transform-origin: center;
-    animation: pulse 1.2 ease-in-out infinite;
+.icon {
+    flex: none;
+    animation: spin 0.9s linear infinite;
 }
-.dot2{
-    animation-delay: 0.15s;
-}
-.dot3 {animation-delay: 0.3s;}
 
-@keyframes pulse {
-    0%, 80%, 100% { opacity: 0.25; transform: translateY(0);}
-    40% {opacity: 1; transform: translateY(-1.5px);}
+.track,
+.arc {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+}
+
+.track {
+    opacity: 0.2;
+}
+
+.arc {
+    stroke-dasharray: 18 40;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft, currentColor);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .dot1, .dot2, .dot3 {animation: none; opacity: 1;}
-}
-
-.srOnly {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+    .icon {
+        animation: none;
+    }
 }

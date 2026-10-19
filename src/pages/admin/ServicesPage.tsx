@@ -20,12 +20,15 @@ export default function ServicesPage() {
   const services = useSelector(selectServices);
   const businessId = useSelector(selectBusinessId);
   const dirty = useSelector(selectSiteDirty);
-  const { upload, uploading } = useImageUpload();
+  const { upload } = useImageUpload();
   const [saving, setSaving] = useState(false);
+  const [busyPos, setBusyPos] = useState<number | null>(null);
 
   if (!businessId || services.length === 0) return null;
 
-  async function handlePick(position: 1 | 2 | 3, file: File) {
+ async function handlePick(position: 1 | 2 | 3, file: File) {
+  setBusyPos(position);
+  try {
     const result = await upload(file, businessId!, 'services', `service-${position}-${Date.now()}`, 1200);
     if (!result) {
       dispatch(flashToast('Could not upload the photo'));
@@ -35,7 +38,10 @@ export default function ServicesPage() {
     const next = services.map((s) => (s.position === position ? { ...s, imagePath: result.path } : s));
     const saved = await dispatch(saveArea({ businessId: businessId!, area: 'services', patch: next }));
     dispatch(flashToast(saveArea.fulfilled.match(saved) ? 'Photo updated' : 'Could not save the photo'));
+  } finally {
+    setBusyPos(null);
   }
+}
 
   async function handleSave() {
     setSaving(true);
@@ -58,6 +64,7 @@ export default function ServicesPage() {
           <ImageSlot
             label="Photo"
             value={service.imagePath ? getPublicUrl(service.imagePath) : ''}
+            busy={busyPos === service.position}
             onPick={(file) => handlePick(service.position, file)}
           />
 
@@ -74,8 +81,6 @@ export default function ServicesPage() {
           />
         </div>
       ))}
-
-      {uploading && <p style={{ fontSize: 13 }}>Uploading…</p>}
 
       <SaveBar onSave={handleSave} saving={saving} dirty={dirty} />
     </section>

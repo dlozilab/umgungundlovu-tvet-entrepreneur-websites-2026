@@ -5,10 +5,11 @@ import AppBar from '../shared/AppBar';
 import Drawer from '../shared/Drawer';
 import NavList, { type NavItem } from '../shared/NavList';
 import { useBrandTheme } from '../../hooks/useBrandTheme';
-import { selectBusiness } from '../../store/slices/siteSlice';
+import { selectBusiness, selectSiteError, selectSiteStatus } from '../../store/slices/siteSlice';
 import { signOut } from '../../store/slices/authSlice';
 import { selectNavOpen, openNav, closeNav } from '../../store/slices/uiSlice';
 import { getPublicUrl } from '../../utils/storage';
+import Loader from '../shared/Loader';
 import styles from './CmsLayout.module.css';
 
 const CMS_NAV: NavItem[] = [
@@ -29,9 +30,24 @@ export default function CmsLayout() {
   const location = useLocation();
 
   const business = useSelector(selectBusiness);
+  const siteStatus = useSelector(selectSiteStatus);
+  const siteError = useSelector(selectSiteError);
   const navOpen = useSelector(selectNavOpen);
 
   const activeId = location.pathname.split('/')[2] || 'dashboard';
+
+  if (siteStatus === 'idle' || siteStatus === 'loading') {
+    return <Loader fullPage label="Loading your admin site" />;
+  }
+
+  if (siteStatus === 'failed') {
+    return (
+      <main style={{ maxWidth: 560, margin: '10vh auto', padding: 24 }}>
+        <h1>Could not load your site</h1>
+        <p>{siteError || 'Please try again later.'}</p>
+      </main>
+    );
+  }
 
   // Link already navigates. This just closes the mobile drawer after a tap.
   function handleSelect() {

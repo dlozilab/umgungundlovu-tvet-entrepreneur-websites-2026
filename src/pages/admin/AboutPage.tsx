@@ -23,27 +23,28 @@ export default function AboutPage() {
   const businessId = useSelector(selectBusinessId);
   const dirty = useSelector(selectSiteDirty);
   const portrait = useSelector(selectPortrait);
-  const { upload, uploading, error } = useImageUpload();
+  const { upload, error } = useImageUpload();
   const [saving, setSaving] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   if (!business || !businessId) return null;
 
-  async function handlePick(file: File) {
+ async function handlePick(file: File) {
+  setBusy(true);
+  try {
     const result = await upload(file, businessId!, 'media', `portrait-${Date.now()}`, 1200);
     if (!result) {
       dispatch(flashToast('Could not upload the photo'));
       return;
     }
     const saved = await dispatch(
-      setMedia({
-        businessId: businessId!,
-        slot: 'portrait',
-        image_path: result.path,
-        alt: 'Portrait of the owner',
-      })
+      setMedia({ businessId: businessId!, slot: 'portrait', image_path: result.path, alt: 'Portrait of the owner' })
     );
     dispatch(flashToast(setMedia.fulfilled.match(saved) ? 'Photo updated' : 'Could not save the photo'));
+  } finally {
+    setBusy(false);
   }
+}
 
   async function handleSave() {
     setSaving(true);
@@ -63,9 +64,9 @@ export default function AboutPage() {
         label="Owner photo"
         note="A clear photo of you, facing the camera."
         value={portrait ? getPublicUrl(portrait.imagePath) : ''}
+        busy={busy}
         onPick={handlePick}
       />
-      {uploading && <p style={{ fontSize: 13 }}>Uploading…</p>}
       {error && <p style={{ fontSize: 13, color: 'var(--danger)' }}>{error}</p>}
 
       <Field

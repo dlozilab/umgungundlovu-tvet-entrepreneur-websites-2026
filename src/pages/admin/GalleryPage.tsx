@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch } from '../../store';
 import ImageSlot from '../../components/shared/ImageSlot';
@@ -21,24 +22,35 @@ const SLOTS: { slot: GallerySlot; label: string; note?: string; clearable?: bool
 export default function GalleryPage() {
   const dispatch = useDispatch<AppDispatch>();
   const media = useSelector(selectMedia);
-  const businessId = useSelector(selectBusinessId);
-  const { upload, uploading } = useImageUpload();
+  const businessId = useSelector(selectBusinessId) ?? '';
+  const { upload } = useImageUpload();
+  const [busySlot, setBusySlot] = useState<GallerySlot | null>(null);
 
   if (!businessId) return null;
 
   async function handlePick(slot: GallerySlot, file: File) {
-    const result = await upload(file, businessId!, 'media', `${slot}-${Date.now()}`, 1400);
-    if (!result) {
-      dispatch(flashToast('Could not upload the photo'));
-      return;
+    setBusySlot(slot);
+    try {
+      const result = await upload(file, businessId, 'media', `${slot}-${Date.now()}`, 1400);
+      if (!result) {
+        dispatch(flashToast('Could not upload the photo'));
+        return;
+      }
+      const saved = await dispatch(setMedia({ businessId, slot, image_path: result.path }));
+      dispatch(flashToast(setMedia.fulfilled.match(saved) ? 'Photo updated' : 'Could not save the photo'));
+    } finally {
+      setBusySlot(null);
     }
-    const saved = await dispatch(setMedia({ businessId: businessId!, slot, image_path: result.path }));
-    dispatch(flashToast(setMedia.fulfilled.match(saved) ? 'Photo updated' : 'Could not save the photo'));
   }
 
   async function handleClear(slot: GallerySlot) {
-    const result = await dispatch(clearMedia({ businessId: businessId!, slot }));
-    dispatch(flashToast(clearMedia.fulfilled.match(result) ? 'Photo removed' : 'Could not remove the photo'));
+    setBusySlot(slot);
+    try {
+      const result = await dispatch(clearMedia({ businessId, slot }));
+      dispatch(flashToast(clearMedia.fulfilled.match(result) ? 'Photo removed' : 'Could not remove the photo'));
+    } finally {
+      setBusySlot(null);
+    }
   }
 
   return (
@@ -54,6 +66,7 @@ export default function GalleryPage() {
             label={label}
             note={note}
             value={row?.imagePath ? getPublicUrl(row.imagePath) : ''}
+            busy={busySlot === slot}
             onPick={(file) => handlePick(slot, file)}
             onClear={clearable ? () => handleClear(slot) : undefined}
             allowClear={clearable}
@@ -61,7 +74,6 @@ export default function GalleryPage() {
         );
       })}
 
-      {uploading && <p style={{ fontSize: 13 }}>Uploading…</p>}
     </section>
   );
 }

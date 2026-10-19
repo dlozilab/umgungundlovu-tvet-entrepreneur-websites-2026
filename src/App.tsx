@@ -30,7 +30,9 @@ function PublicSite() {
   const siteStatus = useSelector(selectSiteStatus);
   const siteError = useSelector(selectSiteError);
 
-  if (siteStatus === 'loading') return <Loader fullPage label='Loading Site...'/>;
+  if (siteStatus === 'idle' || siteStatus === 'loading') {
+    return <Loader fullPage label="Loading your site" />;
+  }
   if (siteStatus === 'failed' || !business) {
     return <p style={{ padding: 24 }}>Could not load the site: {siteError}</p>;
   }
