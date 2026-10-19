@@ -23,10 +23,10 @@
   font-weight: 600; font-size: 16px;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-/* .subtitle {
+.subtitle {
   font-size: 11px; color: var(--ink-soft);
   letter-spacing: 0.06em; text-transform: uppercase;
-} */
+}
 
 .nav {
   display: none;
@@ -52,6 +52,38 @@
   width: 44px; height: 44px;
   border: 1px solid var(--line); border-radius: var(--radius);
   background: transparent; cursor: pointer; color: var(--ink);
+}
+
+.dark {
+  background: var(--hero-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .title {
+  color: #fff;
+}
+
+.dark .subtitle {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.dark .logoPlaceholder {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.dark .navLink {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dark .navLink:hover,
+.dark .navLink:focus-visible {
+  color: #fff;
+}
+
+.dark .menuBtn {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
 }
 
 @media (min-width: 768px) {

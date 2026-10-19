@@ -39,7 +39,7 @@ export default function PublicLayout({children}: PublicLayoutProps){
             <AppBar
                 logo={business.logoPath ? getPublicUrl(business.logoPath) : undefined}
                 title={business.name}
-                // subtitle={strapline || undefined}
+                variant="dark"
                 onMenu={() => dispatch(openNav())}
                 navItems={NAV_ITEMS}
             />

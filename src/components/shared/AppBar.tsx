@@ -9,18 +9,27 @@ interface NavLinkItem {
 }
 
 interface AppBarProps {
-  logo?:string;
+  logo?: string;
   title: string;
-  // subtitle?: string;
+  subtitle?: string;
   action?: React.ReactNode;
-  onMenu?: ()=> void;
+  onMenu?: () => void;
   navItems?: NavLinkItem[];
+  variant?: 'light' | 'dark';
 }
 
 
-export default function AppBar({ logo, title, action, onMenu, navItems}: AppBarProps){
+export default function AppBar({
+  logo,
+  title,
+  subtitle,
+  action,
+  onMenu,
+  navItems,
+  variant = 'light',
+}: AppBarProps) {
   return (
-    <header className={styles.bar}>
+    <header className={`${styles.bar} ${variant === 'dark' ? styles.dark : ''}`}>
       <div className={styles.brand}> 
         {logo ? (
           <img className={styles.logo} src={logo} alt="" />
@@ -29,8 +38,7 @@ export default function AppBar({ logo, title, action, onMenu, navItems}: AppBarP
         )}
         <span className={styles.names}>
           <span className={styles.title}>{title}</span>
-          {/* {subtitle && <span className={styles.subtitle}> {subtitle}</span>} */}
-
+          {subtitle && <span className={styles.subtitle}>{subtitle}</span>}
         </span>
       </div>
 
