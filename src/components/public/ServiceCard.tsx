@@ -11,7 +11,7 @@ interface ServiceCardProps {
 
 export default function ServiceCard({service} : ServiceCardProps) {
     const business = useSelector(selectBusiness);
-    const quoteMessage = `Hi there, I would like to get a quote on your ${service.name} as advertised on your site (Services section: ${window.location.origin}/#services). Please text me as soon as you can.`;
+    const quoteMessage = `Hi there, I would like to get a quote on your ${service.name} as advertised on your site ${window.location.origin}/#services ... Please text me as soon as you can.`;
     const quoteLink = buildWaLink(business?.whatsapp ?? '', quoteMessage);
 
     return (
