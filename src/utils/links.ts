@@ -11,11 +11,12 @@ export function buildGeoUri(address: string): GeoLink {
 
 }
 
-export function buildWaLink(number: string): string {
+export function buildWaLink(number: string, message?: string): string {
     let w = (number || '').replace(/\D/g, '');
     if (!w) return '#';
     if (w.charAt(0) === '0') w = '27' + w.slice(1);
-    return `https://wa.me/${w}`
+    const url = `https://wa.me/${w}`;
+    return message ? `${url}?text=${encodeURIComponent(message)}` : url;
 }
 export function buildTelLink(phone: string): string {
     const digits = (phone || '').replace(/\D/g, '');
