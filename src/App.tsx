@@ -24,6 +24,7 @@ import ServicesPage from './pages/admin/ServicesPage';
 import GalleryPage from './pages/admin/GalleryPage';
 import HelpPage from './pages/admin/HelpPage';
 import Loader from './components/shared/Loader';
+import { useFavicon } from './hooks/useFavicon';
 
 function PublicSite() {
   const business = useSelector(selectBusiness);
@@ -54,6 +55,8 @@ function PublicSite() {
 }
 
 export default function App() {
+  useFavicon();
+
   return (
     <>
       <Routes>

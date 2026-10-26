@@ -20,7 +20,7 @@ interface ButtonProps {
   type?: 'button' | 'submit'
 }
 
-export default function Button({
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button({
   children,
   variant = 'outline',
   size= 'md',
@@ -30,7 +30,7 @@ export default function Button({
   block,
   type = 'button',
 
-}: ButtonProps){
+}, ref){
   const ink = useSelector(selectButtonInk);
   const classNames = [
     styles.btn,
@@ -44,11 +44,13 @@ export default function Button({
   .join(' ');
 
   return(
-    <button type={type} className={classNames} onClick={onClick} disabled={disabled} style={variant === 'solid' ? ({ '--btn-ink' : ink} as React.CSSProperties): undefined}>
+    <button ref={ref} type={type} className={classNames} onClick={onClick} disabled={disabled} style={variant === 'solid' ? ({ '--btn-ink' : ink} as React.CSSProperties): undefined}>
       {icon && <Icon name={icon} size={size === 'sm' ? 16 : 18} />}
       {children}
     </button>
   )
 
 
-}
+});
+
+export default Button;

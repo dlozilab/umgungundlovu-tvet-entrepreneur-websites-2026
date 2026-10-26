@@ -14,14 +14,7 @@ export default function MegaTags() {
             const el = document.getElementById(id);
             if (el) el.setAttribute('content', value);
         };
-        const setHref = (id: string, value: string) => {
-            const el = document.getElementById(id);
-            if (el) el.setAttribute('href', value);
-        };
-
-
         setContent('meta-desc', meta.description);
-        setHref('meta-favicon', getPublicUrl(meta.favicon));
         setContent('og-site', meta.title);
         setContent('og-title', meta.title);
         setContent('og-desc', meta.description);
