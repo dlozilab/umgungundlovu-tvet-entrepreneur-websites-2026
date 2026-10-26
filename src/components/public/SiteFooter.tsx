@@ -6,6 +6,8 @@ import styles from './SiteFooter.module.css'
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+const BADGE_LINK = '';
+const BADGE_IMAGE = '/assets/mlab%20logo%20image.jpg';
 
 export default function SiteFooter() {
     const business = useSelector(selectBusiness);
@@ -13,44 +15,34 @@ export default function SiteFooter() {
 
     if (!business) return null;
 
+    const badge = (
+        <img
+            className={styles.badgeImage}
+            src={BADGE_IMAGE}
+            alt="CodeTribe, powered by mLab"
+            width="94"
+            height="45"
+            loading="lazy"
+            decoding="async"
+        />
+    );
+
     return (
-        // <footer className={styles.footer}>
-        //     <div className={`wrap ${styles.cols}`}>
-        //         <div>
-        //             <div className={styles.brand}> 
-        //                 {business.logoPath ? (
-        //                     <img className={styles.logo} src={getPublicUrl(business.logoPath)} alt="" />
-        //                 ): (
-        //                     <div className={styles.logoPh} aria-hidden="true"/>
-        //                 )}
-        //                 <span style={{fontWeight:600}}> {business.name}</span>
-
-        //             </div>
-        //             <a className={styles.address} href={geo.mapsUrl}>
-        //                 <Icon name="pin"/>
-        //                 <span> {business.address}</span>
-        //                 </a>
-        //         </div>
-
-        //         <div className={styles.compliance}>
-        //             <dl className={styles.dl}>
-        //                 <dt> Registered name</dt> <dd>{business.registeredName}</dd>
-        //                 <dt> CIPC registration</dt> <dd>{business.cipcNumber}</dd>
-        //                 <dt> Established</dt> <dd>{business.established}</dd>
-        //             </dl>
-
-        //             <div className={styles.creditRow}>
-        //                 <p className={styles.credit}> Prototype. Data is stores in firebase</p>
-        //                 <a className={styles.adminLink} href="login" aria-label="Site admin" title="Site admin">
-        //                     <Icon name="gear"/>
-        //                 </a>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </footer>
-
-        <Link className={styles.adminLink} to="/admin/dashboard" aria-label="Site administration" title="Site administration">
-  <Icon name="gear" />
-</Link>
+        <footer className={styles.footer}>
+            <div className={`wrap ${styles.wrap}`}>
+                <div className={styles.adminRow}>
+                    <Link className={styles.adminLink} to="/admin/dashboard" aria-label="Site administration" title="Site administration">
+                        <Icon name="gear" />
+                    </Link>
+                </div>
+                <div className={styles.badgeRow}>
+                    {BADGE_LINK ? (
+                        <a href={BADGE_LINK} target="_blank" rel="noopener noreferrer" aria-label="CodeTribe, powered by mLab">
+                            {badge}
+                        </a>
+                    ) : badge}
+                </div>
+            </div>
+        </footer>
     )
 }
