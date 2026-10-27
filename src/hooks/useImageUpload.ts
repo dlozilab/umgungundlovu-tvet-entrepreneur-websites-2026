@@ -65,13 +65,11 @@ export function useImageUpload() {
     blob: Blob,
     businessId: string,
     area: string,
-    name: string,
-    ext = 'jpg',
-    contentType = 'image/jpeg'
+    name: string
   ): Promise<UploadResult | null> {
     setError(null);
     try {
-      const path = await uploadBlobToStorage(blob, businessId, area, name, ext, contentType);
+      const path = await uploadBlobToStorage(blob, businessId, area, name);
       return { path };
     } catch (err: unknown) {
       setError(errorMessage(err));

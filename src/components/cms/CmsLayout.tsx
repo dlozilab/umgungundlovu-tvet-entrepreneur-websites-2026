@@ -11,7 +11,6 @@ import { selectNavOpen, openNav, closeNav } from '../../store/slices/uiSlice';
 import { getPublicUrl } from '../../utils/storage';
 import Loader from '../shared/Loader';
 import styles from './CmsLayout.module.css';
-import FaviconGate from './FaviconGate';
 
 const CMS_NAV: NavItem[] = [
   { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', href: '/admin/dashboard' },
@@ -92,7 +91,6 @@ export default function CmsLayout() {
           <Outlet />
         </main>
       </div>
-      <FaviconGate />
     </div>
   );
 }

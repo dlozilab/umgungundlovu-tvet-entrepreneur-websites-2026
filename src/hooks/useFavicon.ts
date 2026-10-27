@@ -7,8 +7,8 @@ export function useFavicon() {
   const business = useSelector(selectBusiness);
 
   useEffect(() => {
-    const href = getPublicUrl(business?.faviconPath || business?.logoPath || '') || 'data:,';
+    const href = getPublicUrl(business?.logoPath || '') || 'data:,';
     document.getElementById('meta-favicon')?.setAttribute('href', href);
     document.getElementById('meta-apple-touch')?.setAttribute('href', href);
-  }, [business?.faviconPath, business?.logoPath]);
+  }, [business?.logoPath]);
 }

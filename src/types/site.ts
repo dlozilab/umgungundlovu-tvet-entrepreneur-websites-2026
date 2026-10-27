@@ -29,7 +29,6 @@ export type Business = {
   description: string;
   brandColour: string;
   logoPath: string;
-  faviconPath: string;
   sharePath: string;
   aboutStory: string;
   phone: string;

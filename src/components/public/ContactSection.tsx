@@ -32,10 +32,11 @@ export default function ContactSection() {
                             {serves &&  <ContactRow icon="truck" label="How we serve you" value={serves}/>}
                         </ul>
                         <p style={{ fontSize:14}}> Hours vary ..Message us  to confirm </p>
-                        <Button variant="solid" block icon="whatsapp" onClick={() => window.open(wa, '_blank')}>
-                            Message on WhatsApp
-
-                        </Button>
+                        <div id="contact-whatsapp-cta">
+                            <Button variant="solid" block icon="whatsapp" onClick={() => window.open(wa, '_blank')}>
+                                Message on WhatsApp
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
