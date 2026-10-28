@@ -1,15 +1,57 @@
 .tile {
-    margin: 0;
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    background: var(--bg-alt);
+    cursor: pointer;
+    text-align: left;
 }
+
 .tile img {
     width: 100%;
     aspect-ratio: 4/3;
     object-fit: cover;
-    border-radius: var(--raduis);
-    border: 1px solid var(--line-soft);
+    transition: transform 220ms ease;
 }
-.tle figcaption {
-    font-size: 12px;
-    color: var(--ink-soft);
-    padding: 6px 2px 0;
+
+.tile:hover img,
+.tile:focus-visible img {
+    transform: scale(1.035);
+}
+
+.tile:focus-visible {
+    outline: 3px solid var(--brand-mid);
+    outline-offset: 3px;
+}
+
+.caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    gap: 2px;
+    padding: 12px 14px;
+    color: #fff;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 85%);
+}
+
+.title {
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.count {
+    color: rgb(255 255 255 / 82%);
+    font-size: 11px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tile img {
+        transition: none;
+    }
 }

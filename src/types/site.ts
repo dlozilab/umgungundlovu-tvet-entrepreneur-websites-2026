@@ -10,7 +10,52 @@ export type GallerySlot =
   | 'portrait'
   | 'galleryPremises1' | 'galleryPremises2'
   | 'galleryWork1' | 'galleryWork2'
-  | 'galleryDelivery1' | 'galleryDelivery2';
+  | 'galleryDelivery1' | 'galleryDelivery2'
+  | `galleryProject${string}`;
+
+export interface GalleryCategory {
+  id: string;
+  label: string;
+  legacySlot?: GallerySlot;
+}
+
+export const DEFAULT_GALLERY_CATEGORIES: GalleryCategory[] = [
+  {
+    id: 'delivery',
+    label: 'Delivery',
+    legacySlot: 'galleryDelivery1',
+  },
+  {
+    id: 'installation',
+    label: 'Installation',
+    legacySlot: 'galleryDelivery2',
+  },
+  {
+    id: 'volunteer',
+    label: 'Volunteer',
+    legacySlot: 'galleryPremises1',
+  },
+  {
+    id: 'renovation',
+    label: 'Renovation',
+    legacySlot: 'galleryPremises2',
+  },
+  {
+    id: 'construction',
+    label: 'Construction',
+    legacySlot: 'galleryWork1',
+  },
+  {
+    id: 'other',
+    label: 'Other Projects',
+    legacySlot: 'galleryWork2',
+  },
+];
+
+export function getGalleryCategorySlots(category: GalleryCategory): GallerySlot[] {
+  const slotId = `${category.id.charAt(0).toUpperCase()}${category.id.slice(1)}`;
+  return [1, 2, 3, 4].map((number) => `galleryProject${slotId}${number}` as GallerySlot);
+}
 
 export interface GalleryRow {
   slot: GallerySlot;
@@ -44,6 +89,7 @@ export type Business = {
   bbeeLevel: string;
   proudlySa: boolean; 
   published: boolean;
+  galleryCategories?: GalleryCategory[];
 };
 
 export type Profile = {

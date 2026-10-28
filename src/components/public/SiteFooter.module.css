@@ -1,52 +1,89 @@
 .footer {
-  min-height: 76px;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid rgb(255 255 255 / 12%);
+  border-top: 1px solid rgb(255 255 255 / 10%);
   background: #111416;
   color: #fff;
 }
 
 .content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 10px 12px;
+  display: grid;
+  gap: 12px;
+  padding: 18px 20px 12px;
 }
 
-.businessDetails {
+.footerMain {
   display: flex;
   min-width: 0;
-  align-items: center;
-  gap: 9px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.businessName {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
 .copyright {
-  color: rgb(255 255 255 / 84%);
-  font-size: 10px;
-  font-weight: 400;
+  color: rgb(255 255 255 / 62%);
+  font-size: 11px;
   line-height: 1.35;
-  white-space: nowrap;
+}
+
+.footerBottom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgb(255 255 255 / 10%);
 }
 
 .badgeImage {
   display: block;
   flex: none;
-  width: clamp(82px, 28vw, 100px);
+  width: 76px;
   height: auto;
-  max-height: 50px;
+  max-height: 32px;
   object-fit: contain;
+  margin-left: auto;
+}
+
+.compliance {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.flag {
+  flex: none;
+  width: 24px;
+  height: 16px;
+  object-fit: cover;
+  margin-top: 2px;
+}
+
+.complianceDetails {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  color: rgb(255 255 255 / 68%);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.complianceDetails span {
+  overflow-wrap: anywhere;
 }
 
 .adminLink {
   display: grid;
   flex: none;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   place-items: center;
   border-radius: 50%;
-  color: #fff;
+  color: rgb(255 255 255 / 55%);
   transition: background-color 150ms ease, color 150ms ease;
 }
 
@@ -57,45 +94,43 @@
 }
 
 @media (max-width: 359px) {
-  .content {
-    gap: 6px;
-    padding-right: 10px;
-    padding-left: 10px;
-  }
-
-  .businessDetails {
-    gap: 6px;
-  }
-
-  .copyright {
-    font-size: 9px;
-  }
-
   .badgeImage {
-    width: 22vw;
-  }
-
-  .adminLink {
-    width: 28px;
-    height: 28px;
+    width: 64px;
   }
 }
 
 @media (min-width: 768px) {
   .content {
+    gap: 14px;
+    padding-top: 24px;
+  }
+
+  .footerMain {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 24px;
   }
 
-  .businessDetails {
-    gap: 12px;
+  .compliance {
+    align-items: center;
   }
 
-  .copyright {
-    font-size: 12px;
+  .flag {
+    margin-top: 0;
+  }
+
+  .footerBottom {
+    gap: 16px;
   }
 
   .badgeImage {
-    width: 120px;
+    width: 90px;
+  }
+
+  .adminLink {
+    width: 28px;
+    height: 28px;
   }
 }
 

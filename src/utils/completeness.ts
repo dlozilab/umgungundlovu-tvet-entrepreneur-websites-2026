@@ -22,7 +22,7 @@ export function completeness(
         { label: 'Logo, color and share picture', done: !!(business.logoPath && business.brandColour && business.sharePath), page: 'branding'},
         {label: 'About and owner photo', done: !!(business.aboutStory && portrait?.imagePath), page: 'about'},
         {label: `Services, ${svcCount} of 3`, done: svcCount >= 1, page: 'services'},
-        { label: `Gallery, ${filledGallery} of 6 photos`, done: filledGallery >= 3, page: 'gallery' },
+        { label: `Gallery, ${filledGallery} photos`, done: filledGallery >= 3, page: 'gallery' },
     { label: 'Contact and hours', done: !!(business.phone && business.address), page: 'contact' },
     { label: 'Compliance details', done: !!business.cipcNumber, page: 'compliance' },
     ]

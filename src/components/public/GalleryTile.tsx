@@ -1,16 +1,20 @@
-import type { GalleryRow } from "../../types/site";
-import { getPublicUrl } from "../../utils/storage";
 import styles from './GalleryTile.module.css'
 
 interface GalleryTileProps {
-    row: GalleryRow;
+    title: string;
+    imageUrl: string;
+    imageCount: number;
+    onClick: () => void;
 }
 
-export default function GalleryTile({row}: GalleryTileProps) {
+export default function GalleryTile({ title, imageUrl, imageCount, onClick }: GalleryTileProps) {
     return (
-        <figure className={styles.tile}>
-            <img src={getPublicUrl(row.imagePath)} alt={row.alt || ''} />
-            {row.label && <figcaption>{row.label}</figcaption>}
-        </figure>
+        <button className={styles.tile} type="button" onClick={onClick} aria-label={`View ${title} gallery, ${imageCount} ${imageCount === 1 ? 'image' : 'images'}`}>
+            <img src={imageUrl} alt="" />
+            <span className={styles.caption}>
+                <span className={styles.title}>{title}</span>
+                <span className={styles.count}>{imageCount} {imageCount === 1 ? 'photo' : 'photos'} · View gallery</span>
+            </span>
+        </button>
     )
 }
