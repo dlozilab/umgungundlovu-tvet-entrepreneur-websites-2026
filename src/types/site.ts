@@ -13,6 +13,8 @@ export type GallerySlot =
   | 'galleryDelivery1' | 'galleryDelivery2'
   | `galleryProject${string}`;
 
+export type HeroSlot = 'hero1' | 'hero2';
+
 export interface GalleryCategory {
   id: string;
   label: string;

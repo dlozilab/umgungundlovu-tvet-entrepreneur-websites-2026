@@ -12,21 +12,19 @@
   height: 52px;
   place-items: center;
   border-radius: 100px;
-  color: var(--brand-on);
-  background: #25d366;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   transition: opacity 160ms ease, transform 160ms ease;
 }
 .whatsappLogo {
   display: block;
-  width: 30px;
-  height: 30px;
-  fill: none;
-  stroke: #fff;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 34px;
+  height: 34px;
+  color: #000;
+  fill: currentColor;
+  stroke: none;
 }
-.whatsappLogo path { fill: #fff; stroke: none; }
 .hidden {
   opacity: 0;
   pointer-events: none;

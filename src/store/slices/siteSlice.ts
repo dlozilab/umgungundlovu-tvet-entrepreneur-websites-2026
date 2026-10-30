@@ -9,7 +9,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import type { Business, GalleryRow, Area, GallerySlot, Service } from '../../types/site';
+import type { Business, GalleryRow, Area, GallerySlot, HeroSlot, Service } from '../../types/site';
 import type { RootState } from '../index';
 
 interface SiteSlice {
@@ -125,6 +125,40 @@ export const setMedia = createAsyncThunk(
   }
 );
 
+export const saveHeroCaptions = createAsyncThunk(
+  'site/saveHeroCaptions',
+  async (
+    { businessId, slot, caption, subcaption }: {
+      businessId: string;
+      slot: HeroSlot;
+      caption: string;
+      subcaption: string;
+    },
+    { rejectWithValue, getState }
+  ) => {
+    try {
+      await setDoc(
+        doc(db, 'businesses', businessId, 'media', slot),
+        { caption, subcaption },
+        { merge: true }
+      );
+
+      const uid = (getState() as RootState).auth.user?.uid ?? null;
+      await addDoc(collection(db, 'businesses', businessId, 'changeLog'), {
+        area: 'gallery',
+        fields: [`${slot}.caption`, `${slot}.subcaption`],
+        by: uid,
+        at: serverTimestamp(),
+      });
+
+      return { slot, caption, subcaption };
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Could not save hero captions';
+      return rejectWithValue(message);
+    }
+  }
+);
+
 export const clearMedia = createAsyncThunk(
   'site/clearMedia',
   async ({ businessId, slot }: { businessId: string; slot: GallerySlot }, { rejectWithValue }) => {
@@ -194,8 +228,24 @@ const siteSlice = createSlice({
       })
       .addCase(setMedia.fulfilled, (state, action) => {
         const i = state.media.findIndex((m) => m.slot === action.payload.slot);
-        if (i >= 0) state.media[i] = action.payload;
+        if (i >= 0) state.media[i] = { ...state.media[i], ...action.payload };
         else state.media.push(action.payload);
+      })
+      .addCase(saveHeroCaptions.fulfilled, (state, action) => {
+        const row = state.media.find((item) => item.slot === action.payload.slot);
+        if (row) {
+          row.caption = action.payload.caption;
+          row.subcaption = action.payload.subcaption;
+        } else {
+          state.media.push({
+            slot: action.payload.slot,
+            label: '',
+            imagePath: '',
+            alt: '',
+            caption: action.payload.caption,
+            subcaption: action.payload.subcaption,
+          });
+        }
       })
       .addCase(clearMedia.fulfilled, (state, action) => {
         const row = state.media.find((m) => m.slot === action.payload);
