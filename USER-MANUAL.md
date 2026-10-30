@@ -40,10 +40,14 @@ Use your own account. Do not share your password with customers or include passw
 ## 1. Start here: sign in
 
 1. Open your business website in a browser.
-2. Go to the admin sign-in page by adding `/login` to the end of the website address. For example: `https://your-site-address/login`.
-3. Enter your **Email Address** and **Password**.
-4. Select **Sign In**.
-5. When sign-in succeeds, the admin area opens.
+2. Scroll down to the bottom of the public website.
+3. Select the **Settings** gear icon in the footer to open the admin area.
+4. If you are not already signed in, the site takes you to the sign-in screen. Enter your **Email Address** and **Password**, then select **Sign In**.
+5. When sign-in succeeds, the admin area opens. If you are already signed in, the gear takes you straight to the admin screens.
+
+![The website footer with the Settings gear icon](./public/assets/screenshots-for-the-manual/footer.png)
+
+*Scroll to the bottom of your website and select the gear icon to open the admin screens. Your admin account is still required to sign in.*
 
 If you do not have an account, or cannot remember your password, contact mLab. The sign-in page asks you to phone mLab for a password reset.
 
@@ -408,6 +412,7 @@ Screenshots are included throughout the instructions to show where to find commo
 | Screenshot | What it shows |
 | --- | --- |
 | Sign-in form | Login screen and password-reset contact information |
+| Website footer | Settings gear icon that links to the admin screens |
 | Dashboard | Website setup checklist and site-preview link |
 | Business details | Business name, headline, and short-description fields |
 | Branding | Logo, brand-colour, and share-picture controls |
