@@ -22,7 +22,7 @@ Welcome! This guide shows you how to sign in, update your business information, 
 - [Preview your website](#11-preview-your-website)
 - [Sign out safely](#12-sign-out-safely)
 - [Troubleshooting](#13-troubleshooting)
-- [Screenshot checklist](#14-screenshot-checklist)
+- [Screenshots in this manual](#14-screenshots-in-this-manual)
 
 ## Before you begin
 
@@ -47,7 +47,9 @@ Use your own account. Do not share your password with customers or include passw
 
 If you do not have an account, or cannot remember your password, contact mLab. The sign-in page asks you to phone mLab for a password reset.
 
-> **Screenshot idea:** Show the sign-in form with the password hidden. Use a demo account or blur the email address. Never show a password.
+![The admin sign-in screen](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081908.png)
+
+*Enter the email address and password supplied for your admin account. Never share your password.*
 
 ## 2. Understand your dashboard
 
@@ -59,6 +61,10 @@ The **Dashboard** is your starting point after sign-in. It shows the website sec
 - Select **View your site** to open the public website.
 
 The dashboard is a helpful checklist, not a guarantee that every detail is correct. Preview the public site after making updates.
+
+![The admin dashboard and website checklist](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081222.png)
+
+*Select a dashboard item to go directly to that part of your website settings.*
 
 ### Admin menu
 
@@ -77,8 +83,6 @@ Use the admin menu to move between:
 | Help | Short answers to common questions |
 
 On a computer, the admin menu is shown beside the page. On a phone, use the menu button near the top of the screen to open the navigation. Selecting a page closes the mobile menu.
-
-> **Screenshot idea:** Capture the dashboard and menu together on a computer. Take a separate mobile screenshot with the menu open.
 
 ## 3. Make and save changes
 
@@ -115,7 +119,13 @@ Branding images and the About photo also save when the upload finishes. The bran
 - Use everyday language. A customer should understand the offer at a glance.
 - Check names, spelling, and punctuation before saving.
 
-> **Screenshot idea:** Show the three fields with friendly example text, then show how the headline appears on the public home page.
+![The Business Details editor](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081234.png)
+
+*Edit the headline and short description, then save and preview the public site.*
+
+![Example hero section on a phone](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081040.png)
+
+*The headline and supporting text appear over the hero photo.*
 
 ## 5. Set up your branding
 
@@ -151,7 +161,13 @@ The share picture is the image people may see when your link is sent in apps suc
 
 If the generated picture does not look right, upload a different image instead. A share picture can take time to appear in messaging apps because those apps may keep an older preview.
 
-> **Screenshot idea:** Capture the logo preview, colour picker, and share-picture preview. Use a demo logo if the business does not want its branding included in a public manual.
+![Branding controls for the logo, colour, and share picture](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081258.png)
+
+*Upload a logo, choose a brand colour, and create or upload a share picture.*
+
+![Share picture preview](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081319.png)
+
+*Check how the share picture and business details appear together.*
 
 ## 6. Tell your story
 
@@ -164,7 +180,13 @@ If the generated picture does not look right, upload a different image instead. 
 
 Keep the story personal, truthful, and focused on what customers should know. Break up long paragraphs if the field allows it.
 
-> **Screenshot idea:** Show the owner-photo preview and story field. Get permission before using a person's photograph in a manual shared outside the business.
+![The About editor](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081333.png)
+
+*Replace the owner photo and edit the business story.*
+
+![Example About section on the public site](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081100.png)
+
+*Preview the owner photo and story as customers will see them.*
 
 ## 7. Add or update services
 
@@ -181,7 +203,13 @@ The site can show up to three services.
 
 Leave a service name blank if you do not want that service displayed. Use a different photo for each service where possible. Describe the service in terms customers understand, and avoid promises you cannot guarantee.
 
-> **Screenshot idea:** Capture one completed service card in the admin and the matching card on the public site.
+![The Services editor](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081549.png)
+
+*Add or replace service photos, names, and descriptions.*
+
+![Example service cards on the public website](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081117.png)
+
+*Check the service cards and contact action on the public site.*
 
 ## 8. Manage your photos and galleries
 
@@ -198,11 +226,19 @@ The hero can show different text for each slide.
 
 If either field is left blank, the site uses the **Headline** or **Short Description** from **Business details** for that field. The second slide's text is used when the second hero photo is present.
 
+![Hero caption fields in the Gallery editor](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081623.png)
+
+*Each slide has its own headline and supporting text. Save the text for each slide separately.*
+
 ### Update the hero photo
 
 The **Hero photo** is the main photo at the top of your website. Select **Replace**, choose a photo, and wait for the upload to finish. A second hero slide is optional and can be removed with **Remove**.
 
 Choose a photo that represents the business clearly. Check the crop and visibility on a phone as well as a computer.
+
+![Hero photo slots and gallery limit](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081725.png)
+
+*This example shows the six-gallery limit and the hero photo upload slots.*
 
 ### Rename or organize work galleries
 
@@ -234,7 +270,17 @@ The page also has slots for **Premises**, **Work**, and **Delivery** photos. Opt
 - Avoid photos with private information, visible customer details, or people who have not agreed to be shown.
 - Use a descriptive image where possible; avoid uploading an unrelated image just to fill a space.
 
-> **Screenshot idea:** Show gallery names and photo slots in the admin, followed by the public gallery cards. A second screenshot can show a gallery open with its image navigation.
+![Gallery names and photo slots in the admin area](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081710.png)
+
+*Each gallery has four photo slots. The first photo is its cover image.*
+
+![Gallery cards on the public website](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081129.png)
+
+*Customers can browse the named work galleries.*
+
+![An opened gallery photo](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081147.png)
+
+*Selecting a gallery card opens its photos.*
 
 ## 9. Update contact information and hours
 
@@ -258,7 +304,13 @@ The page also has slots for **Premises**, **Work**, and **Delivery** photos. Opt
 - State closed days clearly in your trading hours.
 - Test the WhatsApp button using a device that can open WhatsApp. If a number begins with a South African `0`, the site formats it for the WhatsApp link.
 
-> **Screenshot idea:** Show the contact form, then the public contact section with phone, email, address, and WhatsApp options visible. Use approved business contact details only.
+![The Contact and hours editor](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081829.png)
+
+*Keep the contact fields and customer options current.*
+
+![Contact options on the public website](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081157.png)
+
+*Customers can find the phone, email, WhatsApp, address, and hours on the public site.*
 
 ## 10. Add business registration details
 
@@ -274,7 +326,9 @@ The page also has slots for **Premises**, **Work**, and **Delivery** photos. Opt
 
 Only select badges and enter registration information that are accurate and current. If a field does not apply or you do not want it shown, leave it blank or leave the option unselected.
 
-> **Screenshot idea:** Show the compliance form with sample values, not actual registration numbers, unless the business has approved their publication.
+![The Compliance editor](./public/assets/screenshots-for-the-manual/Screenshot%202026-10-30%20081844.png)
+
+*Only publish registration details and badges that are accurate and approved for display.*
 
 ## 11. Preview your website
 
@@ -347,38 +401,29 @@ Contact mLab. Include the page you were on, what you expected to happen, what ha
 
 ---
 
-## 14. Screenshot checklist
+## 14. Screenshots in this manual
 
-The manual can be used without screenshots. To make it easier for new users to browse, capture the screens below and insert them under the matching sections.
+Screenshots are included throughout the instructions to show where to find common controls and how the public pages can look. They are examples; your business name, images, colours, and content may be different.
 
-| Suggested filename | Screen to capture | Helpful caption or callout |
-| --- | --- | --- |
-| `01-sign-in.png` | Sign-in form | “Enter the account email and password supplied to you.” |
-| `02-dashboard.png` | Dashboard checklist and View your site link | “Select an item marked Needs attention to update it.” |
-| `03-mobile-menu.png` | Admin menu open on a phone | “Tap the menu button to move between sections.” |
-| `04-business-details.png` | Business details form | “Update the name, headline, and short description, then save.” |
-| `05-branding.png` | Branding page with logo and colour controls | “Logo and share picture upload; save your colour change.” |
-| `06-about.png` | About photo and story fields | “Replace the photo, write your story, and save the text.” |
-| `07-services.png` | One service entry with image and text | “Leave a service name blank to hide it.” |
-| `08-gallery-admin.png` | Gallery names and photo slots | “Add photos and save gallery names.” |
-| `09-contact.png` | Contact and hours form | “Check every contact detail before saving.” |
-| `10-compliance.png` | Compliance form | “Only publish accurate registration details and badges.” |
-| `11-public-mobile.png` | Public site on a phone, top to bottom or key section | “Preview the customer experience on a small screen.” |
-| `12-public-contact.png` | Public contact section with links | “Try the phone, email, directions, and WhatsApp links.” |
+| Screenshot | What it shows |
+| --- | --- |
+| Sign-in form | Login screen and password-reset contact information |
+| Dashboard | Website setup checklist and site-preview link |
+| Business details | Business name, headline, and short-description fields |
+| Branding | Logo, brand-colour, and share-picture controls |
+| About | Owner photo and story editor |
+| Services | Service image, name, and description fields |
+| Gallery | Hero-caption editor, photo slots, gallery names, and six-gallery limit |
+| Public pages | Example hero, About, Services, gallery, and contact sections |
+| Contact and hours | Phone, WhatsApp, email, address, hours, and customer options |
+| Compliance | Registration details and optional badges |
 
 ### Make useful screenshots
 
-- Capture the actual application at a readable zoom level; avoid browser tabs and unrelated desktop content when possible.
-- Use a demo account or hide email addresses, private contact details, account identifiers, and customer information.
-- Never include a password, password manager, one-time code, or private browser console.
-- Use sample registration details unless the business has explicitly approved the real information for publication.
-- Make sure example photos are approved for use in the manual.
-- Add simple arrows or numbered markers only when they clarify an action; do not cover the text or controls.
-- Save images in a `screenshots/` folder beside this manual and insert them as Markdown images, for example:
-
-  ```markdown
-  ![The admin dashboard and setup checklist](./screenshots/02-dashboard.png)
-  ```
+- The screenshots are stored in `public/assets/screenshots-for-the-manual/` and embedded using paths relative to this manual.
+- Before sharing this guide outside the intended audience, review screenshots for personal or business information that should not be public, including contact details, account information, and registration numbers.
+- Never include a password, password manager, one-time code, or private browser console in screenshots.
+- Make sure example photos and any people shown have approval for use in the manual.
 
 ---
 
